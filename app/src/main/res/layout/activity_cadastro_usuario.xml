@@ -14,23 +14,21 @@
         android:scaleType="centerCrop"
         android:src="@drawable/bg"
         tools:layout_editor_absoluteX="-21dp"
-        tools:layout_editor_absoluteY="-104dp" />
+        tools:layout_editor_absoluteY="-147dp" />
 
     <EditText
         android:id="@+id/user"
         android:layout_width="306dp"
         android:layout_height="53dp"
         android:layout_marginStart="80dp"
-        android:layout_marginTop="469dp"
         android:layout_marginEnd="80dp"
-        android:layout_marginBottom="39dp"
         android:ems="10"
+        android:hint="Nome Completo"
         android:inputType="text"
-        android:text="Usuário"
-        app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteY="349dp" />
 
     <EditText
         android:id="@+id/password"
@@ -44,7 +42,7 @@
         android:inputType="numberPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user" />
 
@@ -52,12 +50,39 @@
         android:id="@+id/textView"
         android:layout_width="121dp"
         android:layout_height="26dp"
-        android:layout_marginStart="148dp"
-        android:layout_marginEnd="145dp"
+        android:layout_marginStart="236dp"
         android:text="Esqueceu a senha?"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="563dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="177dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginEnd="99dp"
+        android:text="Cadastrar"
         app:layout_constraintEnd_toStartOf="@+id/background"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="643dp" />
+        tools:layout_editor_absoluteY="613dp" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress2"
+        android:layout_width="307dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="14dp"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toStartOf="@+id/background"
+        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
