@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_dark"
+    tools:context=".ActivityBuscaLivros">
+
+    <ImageButton
+        android:id="@+id/btnVoltar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Voltar para a tela anterior"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:tint="@color/text_primary_white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Pesquisa"
+        android:textColor="@color/text_primary_white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/btnVoltar"
+        app:layout_constraintStart_toEndOf="@id/btnVoltar"
+        app:layout_constraintTop_toTopOf="@id/btnVoltar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clCampoBusca"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo">
+
+        <EditText
+            android:id="@+id/etBusca"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Buscar por título, autor ou ISBN..."
+            android:inputType="text"
+            android:paddingStart="56dp"
+            android:paddingEnd="24dp"
+            android:textColor="@color/text_primary_white"
+            android:textColorHint="@color/text_secondary_gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="20dp"
+            android:src="@android:drawable/ic_menu_search"
+            app:tint="@color/text_secondary_gray"
+            app:layout_constraintStart_toStartOf="@id/etBusca"
+            app:layout_constraintTop_toTopOf="@id/etBusca"
+            app:layout_constraintBottom_toBottomOf="@id/etBusca"
+            android:contentDescription="Ícone de busca" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResultadosBusca"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="24dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:paddingBottom="24dp"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clCampoBusca"
+        tools:listitem="@layout/list_item_livro" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

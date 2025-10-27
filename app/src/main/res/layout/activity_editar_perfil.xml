@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_dark"
+    android:fillViewport="true"
+    tools:context=".ActivityEditarPerfil">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp">
+
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Voltar e cancelar edição"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="@color/text_primary_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Editar Dados"
+            android:textColor="@color/text_primary_white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnVoltar"
+            app:layout_constraintStart_toEndOf="@id/btnVoltar"
+            app:layout_constraintTop_toTopOf="@id/btnVoltar" />
+
+        <ImageView
+            android:id="@+id/ivFotoPerfil"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_circular_image"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="Foto de Perfil do Aluno" />
+
+        <TextView
+            android:id="@+id/tvTrocarFoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Trocar Foto"
+            android:textColor="@color/button_accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivFotoPerfil" />
+
+        <TextView
+            android:id="@+id/tvLabelNome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Nome Completo"
+            android:textColor="@color/text_primary_white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTrocarFoto"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"/>
+
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Seu nome"
+            android:inputType="textPersonName"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textColor="@color/text_primary_white"
+            android:textColorHint="@color/text_secondary_gray"
+            app:layout_constraintStart_toStartOf="@id/tvLabelNome"
+            app:layout_constraintEnd_toEndOf="@id/tvLabelNome"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelNome"
+            tools:text="João da Silva Almeida" />
+
+        <TextView
+            android:id="@+id/tvLabelEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="E-mail"
+            android:textColor="@color/text_primary_white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tvLabelNome"
+            app:layout_constraintEnd_toEndOf="@id/tvLabelNome"
+            app:layout_constraintTop_toBottomOf="@id/etNome"/>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Seu e-mail institucional"
+            android:inputType="textEmailAddress"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textColor="@color/text_primary_white"
+            android:textColorHint="@color/text_secondary_gray"
+            app:layout_constraintStart_toStartOf="@id/tvLabelEmail"
+            app:layout_constraintEnd_toEndOf="@id/tvLabelEmail"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelEmail"
+            tools:text="joao.almeida@aluno.unb.br" />
+
+        <TextView
+            android:id="@+id/tvLabelSenha"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Nova Senha (opcional)"
+            android:textColor="@color/text_primary_white"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/tvLabelNome"
+            app:layout_constraintEnd_toEndOf="@id/tvLabelNome"
+            app:layout_constraintTop_toBottomOf="@id/etEmail"/>
+
+        <EditText
+            android:id="@+id/etSenha"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_input_field"
+            android:hint="Deixe em branco para manter a senha atual"
+            android:inputType="textPassword"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:textColor="@color/text_primary_white"
+            android:textColorHint="@color/text_secondary_gray"
+            app:layout_constraintStart_toStartOf="@id/tvLabelSenha"
+            app:layout_constraintEnd_toEndOf="@id/tvLabelSenha"
+            app:layout_constraintTop_toBottomOf="@id/tvLabelSenha" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSalvar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="Salvar Alterações"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary_white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etSenha"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

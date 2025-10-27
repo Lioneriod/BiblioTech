@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_dark"
+    tools:context=".ActivityHomeUsuario">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="32dp"
+        android:paddingBottom="16dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/ivFotoPerfil"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/bg_primary_button"
+            android:src="@drawable/baseline_person_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true"
+            android:contentDescription="Abrir Tela de Perfil" />
+
+        <TextView
+            android:id="@+id/tvSaudacao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/text_primary_white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivFotoPerfil"
+            app:layout_constraintEnd_toStartOf="@id/btnNotificacoes"
+            app:layout_constraintTop_toTopOf="@id/ivFotoPerfil"
+            app:layout_constraintBottom_toBottomOf="@id/ivFotoPerfil"
+            tools:text="Olá, João!" />
+
+        <ImageButton
+            android:id="@+id/btnNotificacoes"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Abrir Notificações"
+            android:src="@drawable/baseline_notifications_24"
+            app:tint="@color/text_primary_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <View
+            android:id="@+id/vNotificacaoBadge"
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:background="@drawable/bg_circular_badge"
+            android:backgroundTint="@color/button_cancel_red"
+            app:layout_constraintTop_toTopOf="@id/btnNotificacoes"
+            app:layout_constraintEnd_toEndOf="@id/btnNotificacoes"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/clHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
+
+            <include layout="@layout/card_home_busca_livros" />
+
+            <include layout="@layout/card_home_meus_emprestimos" />
+
+            <include layout="@layout/card_home_minhas_reservas" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

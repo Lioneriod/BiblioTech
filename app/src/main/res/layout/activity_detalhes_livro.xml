@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_dark"
+    android:fillViewport="true"
+    tools:context=".ActivityDetalhesLivro">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="32dp">
+
+        <ImageButton
+            android:id="@+id/btnVoltar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="Voltar para a tela anterior"
+            android:src="@drawable/baseline_arrow_back_24"
+            app:tint="@color/text_primary_white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTituloTela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Detalhes do Livro"
+            android:textColor="@color/text_primary_white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/btnVoltar"
+            app:layout_constraintStart_toEndOf="@id/btnVoltar"
+            app:layout_constraintTop_toTopOf="@id/btnVoltar" />
+
+        <ImageView
+            android:id="@+id/ivCapaLivro"
+            android:layout_width="120dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="32dp"
+            android:scaleType="centerCrop"
+            android:background="@color/input_field_dark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloTela"
+            android:layout_marginStart="24dp"
+            tools:src="@tools:sample/avatars"
+            android:contentDescription="Capa do Livro" />
+
+        <TextView
+            android:id="@+id/tvLivroStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_status_chip"
+            android:paddingLeft="12dp"
+            android:paddingTop="6dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/text_primary_white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/ivCapaLivro"
+            app:layout_constraintTop_toTopOf="@id/ivCapaLivro"
+            android:layout_marginStart="24dp"
+            tools:text="DISPONÍVEL"
+            android:backgroundTint="@color/status_available_green" />
+
+        <TextView
+            android:id="@+id/tvLivroTitulo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_primary_white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tvLivroStatus"
+            app:layout_constraintTop_toBottomOf="@id/tvLivroStatus"
+            android:layout_marginEnd="24dp"
+            tools:text="O Essência do Eterno (Impresso)" />
+
+        <TextView
+            android:id="@+id/tvLivroDetalhes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/text_secondary_gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/tvLivroTitulo"
+            app:layout_constraintStart_toStartOf="@id/tvLivroTitulo"
+            app:layout_constraintTop_toBottomOf="@id/tvLivroTitulo"
+            tools:text="T.M. Lao. | Ano: 2023 | ISBN: 123456789" />
+
+        <TextView
+            android:id="@+id/tvTituloSinopse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Sinopse"
+            android:textColor="@color/text_primary_white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivCapaLivro"
+            android:layout_marginStart="24dp"/>
+
+        <TextView
+            android:id="@+id/tvSinopse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_secondary_gray"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloSinopse"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            tools:text="Esta é a descrição detalhada do livro, que pode ser longa. A obra aborda temas profundos de metafísica e ficção científica, explorando a natureza do tempo e da consciência..." />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnReservar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_primary_button"
+            android:text="Reservar Livro"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary_white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSinopse"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancelarReserva"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_primary_button"
+            android:backgroundTint="@color/button_cancel_red"
+            android:text="Cancelar Reserva"
+            android:textAllCaps="false"
+            android:textColor="@color/text_primary_white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSinopse"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:visibility="gone"
+            tools:visibility="gone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

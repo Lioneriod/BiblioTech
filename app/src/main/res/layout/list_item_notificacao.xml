@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_input_field"
+    android:padding="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/ivIconeNotificacao"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:tint="@color/button_accent_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="Ícone da Notificação"
+        tools:src="@android:drawable/ic_dialog_alert"
+        app:tint="@color/status_reserved" />
+
+    <TextView
+        android:id="@+id/tvTituloNotificacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:textColor="@color/text_primary_white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvDataNotificacao"
+        app:layout_constraintStart_toEndOf="@id/ivIconeNotificacao"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Livro 'O Essência do Eterno' disponível!" />
+
+    <TextView
+        android:id="@+id/tvCorpoNotificacao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/text_secondary_gray"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/tvTituloNotificacao"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloNotificacao"
+        tools:text="Sua reserva foi atendida. Você tem 48h para retirar o livro na biblioteca." />
+
+    <TextView
+        android:id="@+id/tvDataNotificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary_gray"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10 min atrás" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

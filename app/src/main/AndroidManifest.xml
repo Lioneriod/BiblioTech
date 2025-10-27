@@ -12,6 +12,42 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BiblioTech">
         <activity
+            android:name=".ActivityHomeAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityHomeUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityHistoricoUsuario"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityEmissaoRelatorio"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityListagemUsuarios"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityGerenciarReservasLivro"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityEditarPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityNotificacoes"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityMeusEmprestimos"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityDetalhesLivro"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityBuscaLivros"
+            android:exported="false" />
+        <activity
             android:name=".ActivityCadastro"
             android:exported="false" />
         <activity
