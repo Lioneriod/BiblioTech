@@ -15,6 +15,9 @@
             android:name=".ActivityCadastro"
             android:exported="false" />
         <activity
+            android:name=".ActivityEsqueceuSenha"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
