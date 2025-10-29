@@ -24,7 +24,7 @@ class ActivityHomeAdmin : AppCompatActivity() {
         val logout: TextView = findViewById(R.id.tvLogoutAdmin)
         val gerenciarUsuarios: ConstraintLayout = findViewById(R.id.cardUsuarios)
         val relatorio: ConstraintLayout = findViewById(R.id.cardRelatorio)
-        val reservas: ConstraintLayout = findViewById(R.id.telaGerenciarReservasLivro)
+        val reservas: ConstraintLayout = findViewById(R.id.cardAdminReservas)
 
         logout.setOnClickListener {
             val intent = Intent(this, ActivityLogin::class.java)

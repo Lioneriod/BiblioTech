@@ -97,8 +97,6 @@
 
             <include layout="@layout/card_home_meus_emprestimos" />
 
-            <include layout="@layout/card_home_minhas_reservas" />
-
         </LinearLayout>
     </ScrollView>
 
