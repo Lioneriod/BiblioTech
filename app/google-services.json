@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "860606253743",
+    "project_id": "bibliotech-3c25c",
+    "storage_bucket": "bibliotech-3c25c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:860606253743:android:8fe833062de1135ac2625a",
+        "android_client_info": {
+          "package_name": "com.unifor.bibliotech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgoecxgyoPlaYb90qFUrVKM_8lVkGqIoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
