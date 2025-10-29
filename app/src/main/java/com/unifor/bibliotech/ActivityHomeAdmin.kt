@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlin.jvm.java
 
 class ActivityHomeAdmin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class ActivityHomeAdmin : AppCompatActivity() {
         val logout: TextView = findViewById(R.id.tvLogoutAdmin)
         val gerenciarUsuarios: ConstraintLayout = findViewById(R.id.cardUsuarios)
         val relatorio: ConstraintLayout = findViewById(R.id.cardRelatorio)
+        val reservas: ConstraintLayout = findViewById(R.id.telaGerenciarReservasLivro)
 
         logout.setOnClickListener {
             val intent = Intent(this, ActivityLogin::class.java)
@@ -38,6 +40,11 @@ class ActivityHomeAdmin : AppCompatActivity() {
 
         relatorio.setOnClickListener {
             val intent = Intent(this, ActivityEmissaoRelatorio::class.java)
+            startActivity(intent)
+        }
+
+        reservas.setOnClickListener {
+            val intent = Intent(this, ActivityGerenciarReservasLivro::class.java)
             startActivity(intent)
         }
     }
