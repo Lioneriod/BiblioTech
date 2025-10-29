@@ -2,31 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/telaCadastro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_dark"
-    android:padding="24dp"
     tools:context=".ActivityCadastro">
 
     <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvTituloCadastro"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="24dp"
         android:text="Cadastro"
         android:textColor="@color/text_primary_white"
-        android:textSize="32sp"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/etNome"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
         android:background="@drawable/bg_input_field"
-        android:hint="Nome"
+        android:hint="Nome Completo"
         android:inputType="textPersonName"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
@@ -34,7 +38,7 @@
         android:textColorHint="@color/text_secondary_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
+        app:layout_constraintTop_toBottomOf="@id/tvTituloCadastro" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -42,14 +46,14 @@
         android:layout_height="56dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_input_field"
-        android:hint="Email"
+        android:hint="E-mail (Matrícula ou Aluno)"
         android:inputType="textEmailAddress"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
         android:textColor="@color/text_primary_white"
         android:textColorHint="@color/text_secondary_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/etNome"
+        app:layout_constraintStart_toStartOf="@id/etNome"
         app:layout_constraintTop_toBottomOf="@id/etNome" />
 
     <EditText
@@ -64,32 +68,51 @@
         android:paddingEnd="24dp"
         android:textColor="@color/text_primary_white"
         android:textColorHint="@color/text_secondary_gray"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/etEmail"
+        app:layout_constraintStart_toStartOf="@id/etEmail"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCadastrar"
         android:layout_width="0dp"
         android:layout_height="56dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/bg_primary_button"
         android:text="Cadastrar"
         android:textAllCaps="false"
         android:textColor="@color/text_primary_white"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="370dp" />
+        app:layout_constraintEnd_toEndOf="@id/etSenha"
+        app:layout_constraintStart_toStartOf="@id/etSenha"
+        app:layout_constraintTop_toBottomOf="@id/etSenha" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvJaTemConta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:text="Já tem uma conta?"
+        android:textColor="@color/text_secondary_gray"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnLogin"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnCadastrar"
-        app:layout_constraintVertical_bias="0.2"/>
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="4dp"/>
+
+    <TextView
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="Login"
+        android:textColor="@color/button_accent_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tvJaTemConta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvJaTemConta"
+        app:layout_constraintTop_toTopOf="@id/tvJaTemConta" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

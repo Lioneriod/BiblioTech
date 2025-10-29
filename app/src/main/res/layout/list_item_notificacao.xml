@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/itemNotificacao"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
@@ -15,13 +16,13 @@
         android:id="@+id/ivIconeNotificacao"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Ícone da Notificação"
         android:src="@drawable/baseline_arrow_back_24"
-        app:tint="@color/button_accent_blue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="Ícone da Notificação"
-        tools:src="@android:drawable/ic_dialog_alert"
-        app:tint="@color/status_reserved" />
+        app:tint="@color/status_reserved"
+        tools:src="@android:drawable/ic_dialog_alert" />
 
     <TextView
         android:id="@+id/tvTituloNotificacao"
