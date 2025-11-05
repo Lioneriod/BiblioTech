@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ActivityHomeUsuario : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +27,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
         val perfil: ImageView = findViewById(R.id.ivFotoPerfil)
         val pesquisar: ConstraintLayout = findViewById(R.id.buscarLivros)
         val emprestimos: ConstraintLayout = findViewById(R.id.cardEmprestimos)
-//        val reservas: ConstraintLayout = findViewById(R.id.cardReservas)
+        val fabChatBot: FloatingActionButton = findViewById(R.id.fabChatbot)
 
         notificacoes.setOnClickListener {
             val intent = Intent(this, ActivityNotificacoes::class.java)
@@ -45,6 +46,11 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         emprestimos.setOnClickListener {
             val intent = Intent(this, ActivityMeusEmprestimos::class.java)
+            startActivity(intent)
+        }
+
+        fabChatBot.setOnClickListener {
+            val intent = Intent(this, ActivityChatBot::class.java)
             startActivity(intent)
         }
 
