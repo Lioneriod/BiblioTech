@@ -1,51 +1,65 @@
 package com.unifor.bibliotech
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat.enableEdgeToEdge
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ActivityCadastro : AppCompatActivity() {
     lateinit var fb: FirebaseFirestore
+    private lateinit var etNome: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etSenha: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
-       fb = Firebase.firestore
+        fb = Firebase.firestore
+        etNome = findViewById(R.id.etNome)
+        etEmail = findViewById(R.id.etEmail)
+        etSenha = findViewById(R.id.etSenha)
+        val btnCadastro: TextView = findViewById(R.id.btnCadastrar)
 
-        val linkLogin: TextView = findViewById(R.id.btnLogin)
-
-        linkLogin.setOnClickListener {
-
-            fb.collection("usuario")
-                .add(mapOf(
-                    "nome" to "variavelNome",
-                    "nome" to "variavelNome"
-                ))
-
-            finish()
+        btnCadastro.setOnClickListener {
+            Log.d("MEUAPP", "Botão de cadastro FOI CLICADO")
+            cadastrarUsuario()
         }
     }
+    private fun cadastrarUsuario() {
+        val nome = etNome.text.toString()
+        val email = etEmail.text.toString()
+        val senha = etSenha.text.toString()
 
-    override fun onPause() {
-        super.onPause()
+        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
+            Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val usuarioMap = mapOf(
+            "nome" to nome,
+            "email" to email,
+            "senha" to senha
+        )
+
+        fb.collection("usuario")
+            .add(usuarioMap)
+            .addOnSuccessListener { documentReference ->
+                Log.d("FIRECRIACAO", "Documento salvo com ID: ${documentReference.id}")
+                Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Log.w("FIRECRIACAO", "Erro ao adicionar documento", e)
+                Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
+            }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-    }
+    override fun onPause() { super.onPause() }
+    override fun onResume() { super.onResume() }
+    override fun onStop() { super.onStop() }
+    override fun onRestart() { super.onRestart() }
 }
