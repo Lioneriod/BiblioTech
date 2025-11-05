@@ -42,11 +42,11 @@
             android:textColor="@color/text_primary_white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/ivFotoPerfil"
-            app:layout_constraintEnd_toStartOf="@id/btnNotificacoes"
-            app:layout_constraintTop_toTopOf="@id/ivFotoPerfil"
             app:layout_constraintBottom_toBottomOf="@id/ivFotoPerfil"
-            tools:text="Olá, João!" />
+            app:layout_constraintEnd_toStartOf="@id/btnNotificacoes"
+            app:layout_constraintStart_toEndOf="@id/ivFotoPerfil"
+            app:layout_constraintTop_toTopOf="@id/ivFotoPerfil"
+            tools:text="Olá!" />
 
         <ImageButton
             android:id="@+id/btnNotificacoes"

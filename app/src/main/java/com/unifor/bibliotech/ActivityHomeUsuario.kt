@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +24,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
         }
 
         val notificacoes: ImageButton = findViewById(R.id.btnNotificacoes)
+        val saudacao: TextView = findViewById(R.id.tvSaudacao)
         val perfil: ImageView = findViewById(R.id.ivFotoPerfil)
         val pesquisar: ConstraintLayout = findViewById(R.id.buscarLivros)
         val emprestimos: ConstraintLayout = findViewById(R.id.cardEmprestimos)
