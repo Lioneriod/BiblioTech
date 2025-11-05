@@ -56,25 +56,25 @@ class ActivityLogin : AppCompatActivity() {
                 Toast.makeText(this, "Por favor, preencha E-mail e Senha.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            private fun lerDados(){
-                fb.collection("pessoas2")
-                    .document("")
-                    .get().addOnSucessListener{ result ->
-                        Log.d("FIREBASE")
-                    }
-            }
-            private fun atualizarDados(){
-                fb.collection("pessoas2")
-                    .document("")
-                    .update(mapOf(
-                        "nome" to "unifor",
-                        "email" to "teste@gmail.com",
-                        "senha" to "asd123"
-                    ))
-            }
-            private fun deletarDados(){
-                fb.collection("pessoas2").document()
-            }
+//            private fun lerDados(){
+//                fb.collection("pessoas2")
+//                    .document("")
+//                    .get().addOnSucessListener{ result ->
+//                        Log.d("FIREBASE")
+//                    }
+//            }
+//            private fun atualizarDados(){
+//                fb.collection("pessoas2")
+//                    .document("")
+//                    .update(mapOf(
+//                        "nome" to "unifor",
+//                        "email" to "teste@gmail.com",
+//                        "senha" to "asd123"
+//                    ))
+//            }
+//            private fun deletarDados(){
+//                fb.collection("pessoas2").document()
+//            }
 
             if(email == "aluno@gmail.com" && senha == "123321") {
                 val intent = Intent(this, ActivityHomeUsuario::class.java)

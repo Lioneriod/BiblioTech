@@ -56,7 +56,17 @@ class ActivityBuscaLivros : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        recyclerView.adapter = LivroAdapter(dadosLivros)
+        val onItemClick: (Livro) -> Unit = { livroClicado ->
+            val intent = Intent(this, ActivityDetalhesLivro::class.java)
+
+            intent.putExtra("TITULO_LIVRO", livroClicado.titulo)
+            intent.putExtra("AUTOR_LIVRO", livroClicado.autor)
+            intent.putExtra("ANO_PUB_LIVRO", livroClicado.anoPub)
+            intent.putExtra("STATUS_LIVRO", livroClicado.status)
+            startActivity(intent)
+        }
+
+        recyclerView.adapter = LivroAdapter(dadosLivros, onItemClick)
 
         voltar.setOnClickListener {
             finish()

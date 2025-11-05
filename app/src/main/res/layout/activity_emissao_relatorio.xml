@@ -2,17 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/telaEmissaoRelatorio"
+    android:id="@+id/cl_main_root_relatorios"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_dark"
+    android:padding="24dp"
     tools:context=".ActivityEmissaoRelatorio">
 
     <ImageButton
         android:id="@+id/btnVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:contentDescription="Voltar para a tela anterior"
@@ -23,101 +23,53 @@
 
     <TextView
         android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="Relatórios Admin"
+        android:layout_marginTop="8dp"
+        android:text="Emissão de Relatórios"
         android:textColor="@color/text_primary_white"
         android:textSize="32sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/btnVoltar"
-        app:layout_constraintStart_toEndOf="@id/btnVoltar"
-        app:layout_constraintTop_toTopOf="@id/btnVoltar" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnVoltar" />
 
     <TextView
-        android:id="@+id/tvInstrucao"
+        android:id="@+id/tvMensagem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        android:text="Selecione o relatório que deseja gerar ou visualizar."
+        android:text="Pressione o botão abaixo para gerar o Relatório Consolidado da Biblioteca, que inclui os livros mais emprestados e os usuários mais ativos no sistema."
         android:textColor="@color/text_secondary_gray"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo" />
 
-    <LinearLayout
-        android:id="@+id/llContainerRelatorios"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGerarRelatorio"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:paddingStart="24dp"
-        android:paddingTop="24dp"
-        android:paddingEnd="24dp"
-        android:paddingBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/bg_primary_button"
+        android:text="Gerar Relatório Consolidado"
+        android:textAllCaps="false"
+        android:textColor="@color/text_primary_white"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvInstrucao"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@id/tvMensagem" />
 
-        <include
-            android:id="@+id/itemRelatorioLivros"
-            layout="@layout/list_item_relatorio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include
-            android:id="@+id/itemRelatorioUsuarios"
-            layout="@layout/list_item_relatorio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tvTituloResultado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Top 5 Mais Emprestados (Total)"
-            android:textColor="@color/text_primary_white"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="visible"
-            tools:visibility="visible" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="1. O Essência do Eterno (58 empréstimos)"
-            android:textColor="@color/text_secondary_gray"
-            android:textSize="16sp"
-            android:visibility="visible"
-            tools:visibility="visible" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="2. Crime Organizado Digital (42 empréstimos)"
-            android:textColor="@color/text_secondary_gray"
-            android:textSize="16sp"
-            android:visibility="visible"
-            tools:visibility="visible" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="3. A Realidade de uma Dignidade (35 empréstimos)"
-            android:textColor="@color/text_secondary_gray"
-            android:textSize="16sp"
-            android:visibility="visible"
-            tools:visibility="visible" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvResultadoRelatorio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/text_primary_white"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnGerarRelatorio"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

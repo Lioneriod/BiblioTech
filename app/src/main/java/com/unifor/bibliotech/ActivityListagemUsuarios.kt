@@ -1,5 +1,6 @@
 package com.unifor.bibliotech
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
@@ -42,7 +43,20 @@ class ActivityListagemUsuarios : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        recyclerView.adapter = UsuarioAdapter(dadosUsuarios)
+        val detailClicked: (Usuario) -> Unit = { detalhesClidado ->
+            val intent = Intent(this, ActivityHistoricoUsuario::class.java)
+
+            intent.putExtra("USER_NAME", detalhesClidado.nome)
+            intent.putExtra("USER_DETAILS", detalhesClidado.detalhes)
+
+            startActivity(intent)
+        }
+
+        val onRemoveClicked: (Usuario) -> Unit = { detalhesClidado ->
+            TODO()
+        }
+
+        recyclerView.adapter = UsuarioAdapter(dadosUsuarios, detailClicked, onRemoveClicked)
 
         voltar.setOnClickListener {
             finish()

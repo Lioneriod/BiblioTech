@@ -9,7 +9,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class UsuarioAdapter(private val listaUsuarios: List<Usuario>): RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
+class UsuarioAdapter(private val listaUsuarios: List<Usuario>, private val onClickDetails: (Usuario) -> Unit, private val onClickRemove: (Usuario) -> Unit): RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
     class UsuarioViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clUsuario: ConstraintLayout = itemView.findViewById(R.id.clUsuario)
         val tvUsuarioNome: TextView = itemView.findViewById(R.id.tvUsuarioNome)
@@ -32,6 +32,14 @@ class UsuarioAdapter(private val listaUsuarios: List<Usuario>): RecyclerView.Ada
 
         holder.tvUsuarioNome.text = usuario.nome
         holder.tvUsuarioDetalhe.text = usuario.detalhes
+
+        holder.btnVerHistorico.setOnClickListener {
+            onClickDetails(usuario)
+        }
+
+        holder.btnExcluir.setOnClickListener {
+            onClickRemove(usuario)
+        }
     }
 
     override fun getItemCount() = listaUsuarios.size

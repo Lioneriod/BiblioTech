@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class LivroAdapter(private val listaLivros: List<Livro>): RecyclerView.Adapter<LivroAdapter.LivroViewHolder>() {
+class LivroAdapter(private val listaLivros: List<Livro>, private val onItemClicked: (Livro) -> Unit): RecyclerView.Adapter<LivroAdapter.LivroViewHolder>() {
     class LivroViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clLivro: ConstraintLayout = itemView.findViewById(R.id.cardLivro)
         val tvStatus: TextView = itemView.findViewById(R.id.tvLivroStatus)
@@ -29,15 +29,10 @@ class LivroAdapter(private val listaLivros: List<Livro>): RecyclerView.Adapter<L
         holder.tvAutor.text = livro.autor
         holder.tvTitulo.text = livro.titulo
         holder.tvAnoPub.text = livro.anoPub
-
-        if(livro.status) {
-            TODO()
-        } else {
-            TODO()
-        }
+        holder.tvStatus.text = if (livro.status) "Disponível" else "Indisponível"
 
         holder.itemView.setOnClickListener {
-            TODO()
+            onItemClicked(livro)
         }
     }
 
