@@ -8,6 +8,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class LivroAdapter(private val listaLivros: List<Livro>, private val onItemClicked: (Livro) -> Unit): RecyclerView.Adapter<LivroAdapter.LivroViewHolder>() {
+    private var livrosExibidos: MutableList<Livro> = listaLivros.toMutableList()
+
     class LivroViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clLivro: ConstraintLayout = itemView.findViewById(R.id.cardLivro)
         val tvStatus: TextView = itemView.findViewById(R.id.tvLivroStatus)
@@ -23,7 +25,7 @@ class LivroAdapter(private val listaLivros: List<Livro>, private val onItemClick
     }
 
     override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
-        val livro = listaLivros[position]
+        val livro = livrosExibidos[position]
         val context = holder.itemView.context
 
         holder.tvAutor.text = livro.autor
@@ -36,5 +38,22 @@ class LivroAdapter(private val listaLivros: List<Livro>, private val onItemClick
         }
     }
 
-    override fun getItemCount() = listaLivros.size
+    override fun getItemCount() = livrosExibidos.size
+
+    fun filter(query: String) {
+        val termoBusca = query.lowercase().trim()
+
+        livrosExibidos.clear()
+
+        if(termoBusca.isEmpty()) {
+            livrosExibidos.addAll(listaLivros)
+        } else {
+            val resultados = listaLivros.filter { livro ->
+                livro.titulo.lowercase().contains(termoBusca) ||
+                livro.autor.lowercase().contains(termoBusca)
+            }
+            livrosExibidos.addAll(resultados)
+        }
+        notifyDataSetChanged()
+    }
 }

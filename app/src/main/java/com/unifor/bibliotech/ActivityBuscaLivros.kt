@@ -2,6 +2,9 @@ package com.unifor.bibliotech
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
@@ -65,8 +68,24 @@ class ActivityBuscaLivros : AppCompatActivity() {
             intent.putExtra("STATUS_LIVRO", livroClicado.status)
             startActivity(intent)
         }
+        val livroAdapter = LivroAdapter(dadosLivros, onItemClick)
+        recyclerView.adapter = livroAdapter
 
-        recyclerView.adapter = LivroAdapter(dadosLivros, onItemClick)
+        val etBusca: EditText = findViewById(R.id.etBusca)
+
+        etBusca.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                p0?.let {
+                    livroAdapter.filter(it.toString())
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
         voltar.setOnClickListener {
             finish()
