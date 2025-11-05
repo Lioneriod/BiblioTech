@@ -8,6 +8,21 @@
     android:background="@color/app_background_dark"
     tools:context=".ActivityHomeUsuario">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabChatbot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Abrir Chatbot de Suporte"
+        android:src="@drawable/baseline_chat_24"
+        app:tint="@color/text_primary_white"
+        app:backgroundTint="@color/button_accent_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clHeader"
         android:layout_width="0dp"
