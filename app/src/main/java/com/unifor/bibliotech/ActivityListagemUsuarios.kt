@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class ActivityListagemUsuarios : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,27 @@ class ActivityListagemUsuarios : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+
+        val dadosUsuarios = listOf(
+            Usuario(
+                nome = "João Lucas Lobo Pinto Barboza",
+                detalhes = "Matrícula: 2412830 - usuário desde: 29/10/2025"
+            ),
+            Usuario(
+                nome = "Carlinhos",
+                detalhes = "Matrícula: 3143133 - usuário desde: 23/11/2025"
+            ),
+            Usuario(
+                nome = "George Maldivas",
+                detalhes = "Matrícula: 8433763 - usuário desde: 05/09/2025"
+            )
+        )
+
+        val recyclerView: RecyclerView = findViewById(R.id.rvUsuarios)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        recyclerView.adapter = UsuarioAdapter(dadosUsuarios)
 
         voltar.setOnClickListener {
             finish()

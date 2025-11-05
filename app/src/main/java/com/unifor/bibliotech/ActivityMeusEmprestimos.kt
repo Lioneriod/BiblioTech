@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class ActivityMeusEmprestimos : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +22,30 @@ class ActivityMeusEmprestimos : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+
+        val dadosEmprestimo = listOf(
+            Emprestimo(
+                titulo = "Five Night's At Freddy's: Into The Pit",
+                autor = "Scott Cawthon",
+                prazo = "15/10"
+            ),
+            Emprestimo(
+                titulo = "Coraline",
+                autor = "Adilene",
+                prazo = "05/09"
+            ),
+            Emprestimo(
+                titulo = "Five Night's At Freddy's: The Fourth Closet",
+                autor = "Scott Cawthon",
+                prazo = "20/12"
+            )
+        )
+
+        val recyclerView: RecyclerView = findViewById(R.id.rvEmprestimos)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        recyclerView.adapter = EmprestimoAdapter(dadosEmprestimo)
 
         voltar.setOnClickListener {
             finish()

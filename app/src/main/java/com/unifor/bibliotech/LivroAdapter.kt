@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class LivroAdapter(private val listaLivros: List<Livro>): RecyclerView.Adapter<LivroAdapter.LivroViewHolder>() {
-
     class LivroViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clLivro: ConstraintLayout = itemView.findViewById(R.id.cardLivro)
         val tvStatus: TextView = itemView.findViewById(R.id.tvLivroStatus)
@@ -22,4 +21,25 @@ class LivroAdapter(private val listaLivros: List<Livro>): RecyclerView.Adapter<L
             .inflate(R.layout.list_item_livro, parent, false)
         return LivroViewHolder(view)
     }
+
+    override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
+        val livro = listaLivros[position]
+        val context = holder.itemView.context
+
+        holder.tvAutor.text = livro.autor
+        holder.tvTitulo.text = livro.titulo
+        holder.tvAnoPub.text = livro.anoPub
+
+        if(livro.status) {
+            TODO()
+        } else {
+            TODO()
+        }
+
+        holder.itemView.setOnClickListener {
+            TODO()
+        }
+    }
+
+    override fun getItemCount() = listaLivros.size
 }

@@ -3,11 +3,14 @@ package com.unifor.bibliotech
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class ActivityBuscaLivros : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +24,39 @@ class ActivityBuscaLivros : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+
+        val dadosLivros = listOf(
+            Livro(
+                titulo = "Five Night's At Freddy's: Into The Pit",
+                autor = "Scott Cawthon",
+                anoPub = "01/01/2019",
+                status = true
+            ),
+            Livro(
+                titulo = "Five Night's At Freddy's: The Silver Eyes",
+                autor = "Scott Cawthon",
+                anoPub = "01/01/2017",
+                status = true
+            ),
+            Livro(
+                titulo = "Five Night's At Freddy's: The Fourth Closet",
+                autor = "Scott Cawthon",
+                anoPub = "01/01/2018",
+                status = true
+            ),
+            Livro(
+                titulo = "Meu pequeno príncipe",
+                autor = "Júlio Cézar",
+                anoPub = "01/01/2017",
+                status = false
+            )
+        )
+
+        val recyclerView: RecyclerView = findViewById(R.id.rvResultadosBusca)
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        recyclerView.adapter = LivroAdapter(dadosLivros)
 
         voltar.setOnClickListener {
             finish()
