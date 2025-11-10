@@ -49,6 +49,7 @@ class ActivityBuscaLivros : AppCompatActivity() {
             intent.putExtra("USUARIO_ID", usuarioId)
             intent.putExtra("TITULO_LIVRO", livroClicado.titulo)
             intent.putExtra("AUTOR_LIVRO", livroClicado.autor)
+            intent.putExtra("SINOPSE_LIVRO", livroClicado.sinopse)
             intent.putExtra("ANO_PUB_LIVRO", livroClicado.anoPub)
             intent.putExtra("STATUS_LIVRO", livroClicado.status)
             startActivity(intent)

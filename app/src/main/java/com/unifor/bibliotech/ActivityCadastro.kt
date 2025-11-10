@@ -51,15 +51,6 @@ class ActivityCadastro : AppCompatActivity() {
                 Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
             }
 
-        fb.collection("usuario")
-            .add(usuarioMap)
-            .addOnSuccessListener { documentReference ->
-                Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
-            }
     }
 
     override fun onPause() { super.onPause() }

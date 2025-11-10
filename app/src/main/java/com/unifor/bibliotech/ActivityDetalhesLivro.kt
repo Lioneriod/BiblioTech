@@ -1,7 +1,6 @@
 package com.unifor.bibliotech
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -24,6 +23,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
     private lateinit var autor: String
     private lateinit var btnReservar: Button
     private lateinit var tvStatus: TextView
+    private lateinit var sinopse: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +39,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
         titulo = intent.getStringExtra("TITULO_LIVRO") ?: "Título"
         autor = intent.getStringExtra("AUTOR_LIVRO") ?: "Autor"
+        sinopse = intent.getStringExtra("SINOPSE_LIVRO") ?: "Sinopse não disponível."
 
         val anoPub = intent.getStringExtra("ANO_PUB_LIVRO") ?: "Ano"
         val statusDisponivel = intent.getBooleanExtra("STATUS_LIVRO", false)
@@ -53,7 +54,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
 
         tvTitulo.text = titulo
         tvDetalhes.text = "$autor | Ano: $anoPub"
-        tvSinopse.text = "teste"
+        tvSinopse.text = "$sinopse"
         if (statusDisponivel) {
             tvStatus.text = "DISPONÍVEL"
             btnReservar.isEnabled = true
@@ -69,7 +70,6 @@ class ActivityDetalhesLivro : AppCompatActivity() {
         btnReservar.setOnClickListener {
             if (livroId.isEmpty() || usuarioId.isEmpty()) {
                 Toast.makeText(this, "Erro: ID do livro ou usuário não encontrado.", Toast.LENGTH_LONG).show()
-                Log.e("FIRERESERVA", "LivroID ($livroId) ou UsuarioID ($usuarioId) está vazio.")
                 return@setOnClickListener
             }
             btnReservar.isEnabled = false
