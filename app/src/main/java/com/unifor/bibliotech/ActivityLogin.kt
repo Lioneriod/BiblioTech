@@ -56,7 +56,7 @@ class ActivityLogin : AppCompatActivity() {
                 return@setOnClickListener
             }
             fb.collection("usuario")
-                .whereEqualTo("email", email) // 1. Busca pelo e-mail exato
+                .whereEqualTo("email", email)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     if (querySnapshot.isEmpty) {
