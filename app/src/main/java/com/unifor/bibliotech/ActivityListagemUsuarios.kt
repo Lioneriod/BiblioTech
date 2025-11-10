@@ -84,7 +84,7 @@ class ActivityListagemUsuarios : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
-                Log.w("FIRELISTA", "Erro ao carregar usuários", e)
+                
                 Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
             }
     }
@@ -93,13 +93,13 @@ class ActivityListagemUsuarios : AppCompatActivity() {
         fb.collection("usuario").document(usuario.id)
             .delete()
             .addOnSuccessListener {
-                Log.d("FIREDELETE", "Usuário ${usuario.nome} removido com sucesso!")
+                
                 Toast.makeText(this, "Usuário removido.", Toast.LENGTH_SHORT).show()
                 listaDeUsuarios.remove(usuario)
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
-                Log.w("FIREDELETE", "Erro ao remover usuário", e)
+                
                 Toast.makeText(this, "Erro ao remover usuário.", Toast.LENGTH_SHORT).show()
             }
     }
