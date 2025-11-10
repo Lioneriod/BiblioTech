@@ -6,20 +6,32 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ActivityBuscaLivros : AppCompatActivity() {
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var etBusca: EditText
+    private lateinit var livroAdapter: LivroAdapter
+    private var listaCompletaDeLivros: MutableList<Livro> = mutableListOf()
+    private lateinit var usuarioId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_busca_livros)
+        fb = Firebase.firestore
+        usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telaBuscarLivros)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -27,84 +39,55 @@ class ActivityBuscaLivros : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
-
-        val dadosLivros = listOf(
-            Livro(
-                titulo = "Five Night's At Freddy's: Into The Pit",
-                autor = "Scott Cawthon",
-                anoPub = "01/01/2019",
-                status = true
-            ),
-            Livro(
-                titulo = "Five Night's At Freddy's: The Silver Eyes",
-                autor = "Scott Cawthon",
-                anoPub = "01/01/2017",
-                status = true
-            ),
-            Livro(
-                titulo = "Five Night's At Freddy's: The Fourth Closet",
-                autor = "Scott Cawthon",
-                anoPub = "01/01/2018",
-                status = true
-            ),
-            Livro(
-                titulo = "Meu pequeno príncipe",
-                autor = "Júlio Cézar",
-                anoPub = "01/01/2017",
-                status = false
-            )
-        )
-
-        val recyclerView: RecyclerView = findViewById(R.id.rvResultadosBusca)
-
+        recyclerView = findViewById(R.id.rvResultadosBusca)
+        etBusca = findViewById(R.id.etBusca)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         val onItemClick: (Livro) -> Unit = { livroClicado ->
             val intent = Intent(this, ActivityDetalhesLivro::class.java)
-
+            intent.putExtra("LIVRO_ID", livroClicado.id)
+            intent.putExtra("USUARIO_ID", usuarioId)
             intent.putExtra("TITULO_LIVRO", livroClicado.titulo)
             intent.putExtra("AUTOR_LIVRO", livroClicado.autor)
             intent.putExtra("ANO_PUB_LIVRO", livroClicado.anoPub)
             intent.putExtra("STATUS_LIVRO", livroClicado.status)
             startActivity(intent)
         }
-        val livroAdapter = LivroAdapter(dadosLivros, onItemClick)
+
+        livroAdapter = LivroAdapter(listaCompletaDeLivros, onItemClick)
         recyclerView.adapter = livroAdapter
 
-        val etBusca: EditText = findViewById(R.id.etBusca)
-
-        etBusca.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
+        etBusca.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 p0?.let {
                     livroAdapter.filter(it.toString())
                 }
             }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
-
         voltar.setOnClickListener {
             finish()
         }
+        carregarLivrosDoFirebase()
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun carregarLivrosDoFirebase() {
+        fb.collection("livros")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                listaCompletaDeLivros.clear()
+                val livrosDoFirebase = querySnapshot.toObjects(Livro::class.java)
+                listaCompletaDeLivros.addAll(livrosDoFirebase)
+                livroAdapter.filter(etBusca.text.toString())
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao carregar livros.", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-    }
+    override fun onPause() { super.onPause() }
+    override fun onResume() { super.onResume() }
+    override fun onStop() { super.onStop() }
+    override fun onRestart() { super.onRestart() }
 }

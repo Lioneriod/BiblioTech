@@ -25,7 +25,6 @@ class ActivityCadastro : AppCompatActivity() {
         val btnCadastro: TextView = findViewById(R.id.btnCadastrar)
 
         btnCadastro.setOnClickListener {
-            Log.d("MEUAPP", "Botão de cadastro FOI CLICADO")
             cadastrarUsuario()
         }
     }
@@ -42,18 +41,17 @@ class ActivityCadastro : AppCompatActivity() {
         val usuarioMap = mapOf(
             "nome" to nome,
             "email" to email,
-            "senha" to senha
+            "senha" to senha,
+            "tipo" to "aluno"
         )
 
         fb.collection("usuario")
             .add(usuarioMap)
             .addOnSuccessListener { documentReference ->
-                Log.d("FIRECRIACAO", "Documento salvo com ID: ${documentReference.id}")
                 Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener { e ->
-                Log.w("FIRECRIACAO", "Erro ao adicionar documento", e)
                 Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }

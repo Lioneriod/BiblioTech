@@ -1,8 +1,12 @@
 package com.unifor.bibliotech
 
+import com.google.firebase.firestore.DocumentId
+
 data class Livro(
-    val status: Boolean,
-    val titulo: String,
-    val autor: String,
-    val anoPub: String
+    @DocumentId
+    val id: String = "",
+    val status: Boolean = false,
+    val titulo: String = "",
+    val autor: String = "",
+    val anoPub: String = ""
 )
