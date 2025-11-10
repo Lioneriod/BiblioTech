@@ -25,7 +25,6 @@ class ActivityCadastro : AppCompatActivity() {
         val btnCadastro: TextView = findViewById(R.id.btnCadastrar)
 
         btnCadastro.setOnClickListener {
-            Log.d("MEUAPP", "Botão de cadastro FOI CLICADO")
             cadastrarUsuario()
         }
     }
@@ -33,27 +32,32 @@ class ActivityCadastro : AppCompatActivity() {
         val nome = etNome.text.toString()
         val email = etEmail.text.toString()
         val senha = etSenha.text.toString()
-
-        if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-            Toast.makeText(this, "Por favor, preencha todos os campos.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+        val newDocRef = fb.collection("usuario").document()
+        val idUsuario = newDocRef.id
         val usuarioMap = mapOf(
+            "id" to idUsuario,
             "nome" to nome,
             "email" to email,
-            "senha" to senha
+            "senha" to senha,
+            "tipo" to "aluno"
         )
 
-        fb.collection("usuario")
-            .add(usuarioMap)
-            .addOnSuccessListener { documentReference ->
-                Log.d("FIRECRIACAO", "Documento salvo com ID: ${documentReference.id}")
+        newDocRef.set(usuarioMap)
+            .addOnSuccessListener {
                 Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener { e ->
-                Log.w("FIRECRIACAO", "Erro ao adicionar documento", e)
+                Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+
+        fb.collection("usuario")
+            .add(usuarioMap)
+            .addOnSuccessListener { documentReference ->
+                Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
                 Toast.makeText(this, "Erro ao realizar cadastro: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }

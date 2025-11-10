@@ -2,7 +2,7 @@ package com.unifor.bibliotech
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -10,21 +10,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlin.jvm.java
-
 
 class ActivityLogin : AppCompatActivity() {
-    lateinit var fb:FirebaseFirestore;
+    lateinit var fb: FirebaseFirestore;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         fb = Firebase.firestore;
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telaLogin)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -52,43 +51,46 @@ class ActivityLogin : AppCompatActivity() {
             val email = etEmail.text.toString().trim()
             val senha = etSenha.text.toString()
 
-            if(email.isEmpty() || senha.isEmpty()) {
+            if (email.isEmpty() || senha.isEmpty()) {
                 Toast.makeText(this, "Por favor, preencha E-mail e Senha.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-//            private fun lerDados(){
-//                fb.collection("pessoas2")
-//                    .document("")
-//                    .get().addOnSucessListener{ result ->
-//                        Log.d("FIREBASE")
-//                    }
-//            }
-//            private fun atualizarDados(){
-//                fb.collection("pessoas2")
-//                    .document("")
-//                    .update(mapOf(
-//                        "nome" to "unifor",
-//                        "email" to "teste@gmail.com",
-//                        "senha" to "asd123"
-//                    ))
-//            }
-//            private fun deletarDados(){
-//                fb.collection("pessoas2").document()
-//            }
+            fb.collection("usuario")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { querySnapshot ->
+                    if (querySnapshot.isEmpty) {
+                        Toast.makeText(this, "E-mail não cadastrado.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val document = querySnapshot.documents[0]
+                        val senhaDoBanco = document.getString("senha")
 
-            if(email == "aluno@gmail.com" && senha == "123321") {
-                val intent = Intent(this, ActivityHomeUsuario::class.java)
+                        if (senhaDoBanco == senha) {
+                            Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
+                            val tipoUsuario = document.getString("tipo")
 
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else if(email == "admin@gmail.com" && senha == "123321") {
-                val intent = Intent(this, ActivityHomeAdmin::class.java)
-
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "E-mail ou Senha incorretos.", Toast.LENGTH_SHORT).show()
-            }
+                            if (tipoUsuario == "admin") {
+                                val intent = Intent(this, ActivityHomeAdmin::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } else {
+                                val nomeDoUsuario = document.getString("nome")
+                                val idDoUsuario = document.id
+                                val intent = Intent(this, ActivityHomeUsuario::class.java)
+                                intent.putExtra("NOME_USUARIO", nomeDoUsuario)
+                                intent.putExtra("USUARIO_ID", idDoUsuario)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            }
+                        } else {
+                            Toast.makeText(this, "Senha incorreta.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.w("FIRELOGIN", "Erro ao fazer login", e)
+                    Toast.makeText(this, "Erro ao tentar logar: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
         }
     }
 

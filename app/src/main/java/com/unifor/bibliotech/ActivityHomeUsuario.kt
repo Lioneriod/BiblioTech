@@ -9,11 +9,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat.enableEdgeToEdge
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ActivityHomeUsuario : AppCompatActivity() {
+    private lateinit var usuarioId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,6 +24,8 @@ class ActivityHomeUsuario : AppCompatActivity() {
             insets
         }
 
+        val nomeUsuario = intent.getStringExtra("NOME_USUARIO")
+        usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
         val notificacoes: ImageButton = findViewById(R.id.btnNotificacoes)
         val saudacao: TextView = findViewById(R.id.tvSaudacao)
         val perfil: ImageView = findViewById(R.id.ivFotoPerfil)
@@ -31,8 +33,15 @@ class ActivityHomeUsuario : AppCompatActivity() {
         val emprestimos: ConstraintLayout = findViewById(R.id.cardEmprestimos)
         val fabChatBot: FloatingActionButton = findViewById(R.id.fabChatbot)
 
+        if (nomeUsuario != null && nomeUsuario.isNotEmpty()) {
+            saudacao.text = "Olá, $nomeUsuario!"
+        } else {
+            saudacao.text = "Olá!"
+        }
+
         notificacoes.setOnClickListener {
             val intent = Intent(this, ActivityNotificacoes::class.java)
+            intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
 
@@ -43,6 +52,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         pesquisar.setOnClickListener {
             val intent = Intent(this, ActivityBuscaLivros::class.java)
+            intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
 
