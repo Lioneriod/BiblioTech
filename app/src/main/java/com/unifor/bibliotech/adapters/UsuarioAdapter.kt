@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.unifor.bibliotech.R
+import com.unifor.bibliotech.datas.Usuario
 
 class UsuarioAdapter(private val listaUsuarios: List<Usuario>, private val onClickDetails: (Usuario) -> Unit, private val onClickRemove: (Usuario) -> Unit): RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
     class UsuarioViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

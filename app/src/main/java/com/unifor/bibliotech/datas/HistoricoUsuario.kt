@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.datas
 
 data class HistoricoUsuario(
     val tipoAcao: String,

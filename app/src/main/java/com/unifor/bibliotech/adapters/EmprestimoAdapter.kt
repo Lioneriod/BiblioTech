@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.unifor.bibliotech.datas.Emprestimo
+import com.unifor.bibliotech.R
 
 class EmprestimoAdapter(private val listaEmprestimo: List<Emprestimo>): RecyclerView.Adapter<EmprestimoAdapter.EmprestimoViewHolder>() {
     class EmprestimoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.unifor.bibliotech.datas.HistoricoUsuario
+import com.unifor.bibliotech.R
 
 class HistoricoUsuarioAdapter(private val listaHistorico: List<HistoricoUsuario>): RecyclerView.Adapter<HistoricoUsuarioAdapter.HistoricoUsuarioViewHolder>() {
     class HistoricoUsuarioViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.datas
 
 data class Emprestimo(
     val titulo: String,

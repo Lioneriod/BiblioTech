@@ -9,6 +9,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.unifor.bibliotech.adapters.HistoricoUsuarioAdapter
+import com.unifor.bibliotech.datas.HistoricoUsuario
 
 class ActivityHistoricoUsuario : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

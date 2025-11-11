@@ -1,4 +1,4 @@
-package com.unifor.bibliotech
+package com.unifor.bibliotech.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.unifor.bibliotech.datas.Notificacao
+import com.unifor.bibliotech.R
 
 class NotificacaoAdapter(private val listaNotificacao: List<Notificacao>): RecyclerView.Adapter<NotificacaoAdapter.NotificacaoViewHolder>() {
     class NotificacaoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
