@@ -1,6 +1,7 @@
 package com.unifor.bibliotech.datas
 
 data class Usuario(
-    val nome: String,
-    val detalhes: String
+    val id: String = "",
+    val nome: String = "",
+    val detalhes: String = ""
 )

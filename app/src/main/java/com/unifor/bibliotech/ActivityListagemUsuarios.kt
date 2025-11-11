@@ -2,7 +2,9 @@ package com.unifor.bibliotech
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,12 +13,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.unifor.bibliotech.adapters.UsuarioAdapter
 import com.unifor.bibliotech.datas.Usuario
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ActivityListagemUsuarios : AppCompatActivity() {
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private var listaDeUsuarios: MutableList<Usuario> = mutableListOf()
+    private lateinit var adapter: UsuarioAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_listagem_usuarios)
+        fb = Firebase.firestore
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telaListagemUsuarios)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -24,59 +36,81 @@ class ActivityListagemUsuarios : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+        voltar.setOnClickListener {
+            finish()
+        }
 
-        val dadosUsuarios = listOf(
-            Usuario(
-                nome = "João Lucas Lobo Pinto Barboza",
-                detalhes = "Matrícula: 2412830 - usuário desde: 29/10/2025"
-            ),
-            Usuario(
-                nome = "Carlinhos",
-                detalhes = "Matrícula: 3143133 - usuário desde: 23/11/2025"
-            ),
-            Usuario(
-                nome = "George Maldivas",
-                detalhes = "Matrícula: 8433763 - usuário desde: 05/09/2025"
-            )
-        )
+        setupRecyclerView()
 
-        val recyclerView: RecyclerView = findViewById(R.id.rvUsuarios)
+        carregarUsuariosDoFirebase()
+    }
 
+    private fun setupRecyclerView() {
+        recyclerView = findViewById(R.id.rvUsuarios)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        val detailClicked: (Usuario) -> Unit = { detalhesClidado ->
+        val detailClicked: (Usuario) -> Unit = { usuarioClicado ->
             val intent = Intent(this, ActivityHistoricoUsuario::class.java)
 
-            intent.putExtra("USER_NAME", detalhesClidado.nome)
-            intent.putExtra("USER_DETAILS", detalhesClidado.detalhes)
+            intent.putExtra("USER_ID", usuarioClicado.id)
+            intent.putExtra("USER_NAME", usuarioClicado.nome)
 
             startActivity(intent)
         }
 
-        val onRemoveClicked: (Usuario) -> Unit = { detalhesClidado ->
-            TODO()
+        val onRemoveClicked: (Usuario) -> Unit = { usuarioParaRemover ->
+            removerUsuario(usuarioParaRemover)
         }
 
-        recyclerView.adapter = UsuarioAdapter(dadosUsuarios, detailClicked, onRemoveClicked)
-
-        voltar.setOnClickListener {
-            finish()
-        }
+        adapter = UsuarioAdapter(listaDeUsuarios, detailClicked, onRemoveClicked)
+        recyclerView.adapter = adapter
     }
 
-    override fun onPause() {
-        super.onPause()
+    private fun carregarUsuariosDoFirebase() {
+        fb.collection("usuario")
+            .whereNotEqualTo("tipo", "admin")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+
+                listaDeUsuarios.clear()
+
+                for (document in querySnapshot.documents) {
+                    val id = document.id
+                    val nome = document.getString("nome") ?: "Nome não encontrado"
+                    val email = document.getString("email") ?: ""
+                    val detalhes = "Email: $email"
+
+                    listaDeUsuarios.add(Usuario(id = id, nome = nome, detalhes = detalhes))
+                }
+
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                
+                Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
+            }
     }
 
+    private fun removerUsuario(usuario: Usuario) {
+        fb.collection("usuario").document(usuario.id)
+            .delete()
+            .addOnSuccessListener {
+                
+                Toast.makeText(this, "Usuário removido.", Toast.LENGTH_SHORT).show()
+                listaDeUsuarios.remove(usuario)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                
+                Toast.makeText(this, "Erro ao remover usuário.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    override fun onPause() { super.onPause() }
     override fun onResume() {
         super.onResume()
+        carregarUsuariosDoFirebase()
     }
-
-    override fun onStop() {
-        super.onStop()
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-    }
+    override fun onStop() { super.onStop() }
+    override fun onRestart() { super.onRestart() }
 }
