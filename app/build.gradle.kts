@@ -16,6 +16,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        android.buildFeatures.buildConfig = true
+        buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyDAqK5LdMrD5urMHHA5oWT7aTMnbz4b5jE\"")
     }
 
     buildTypes {
@@ -43,8 +45,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.generativeai)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("com.google.firebase:firebase-firestore-ktx:25.1.4")
+    implementation("com.google.ai.client.generativeai:generativeai:gemini-2.5-flash")
 }

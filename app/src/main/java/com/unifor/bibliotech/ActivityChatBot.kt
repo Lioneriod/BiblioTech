@@ -1,24 +1,25 @@
 package com.unifor.bibliotech
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.ai.client.generativeai.GenerativeModel
+import kotlinx.coroutines.launch
+import com.google.ai.client.generativeai.type.*
 
 class ActivityChatBot : AppCompatActivity() {
     private lateinit var mensagemChatBotAdapter: MensagemChatBotAdapter
     private lateinit var rvChat: RecyclerView
     private lateinit var etMessageInput: EditText
     private lateinit var btnSendMessage: ImageButton
-
-    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var generativeModel: GenerativeModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,22 @@ class ActivityChatBot : AppCompatActivity() {
             insets
         }
 
+        val apiKey = com.unifor.bibliotech.BuildConfig.GEMINI_API_KEY
+
+
+        generativeModel = GenerativeModel(
+            modelName = "gemini-2.5-flash",
+            apiKey = apiKey,
+            systemInstruction = content {
+                text("Você é o assistente virtual da Bibliotech (Um aplicativo da biblioteca da UNIFOR)\n" +
+                        "        Seu objetivo é ajudar os usuários com base nas funcionalidades do aplicativo:\n" +
+                        "        - Horário de Funcionamento: Segunda a Sexta, das 8h às 21h. Sábados, das 9h às 13h.\n" +
+                        "        - Regras de Empréstimo: O prazo padrão é de 15 dias.\n" +
+                        "        - O aplicativo permite Buscar Livros, Ver Meus Empréstimos e Minhas Reservas (tela principal).\n" +
+                        "        - O Painel Administrativo tem gerenciamento de Reservas, Usuários e Relatórios.\n" +
+                        "        Responda sempre em português e de forma concisa.")
+            }
+        )
         val btnVoltar: ImageButton = findViewById(R.id.btnVoltar)
         val messages = mutableListOf<MensagemChatBot>()
         mensagemChatBotAdapter = MensagemChatBotAdapter(messages)
@@ -43,8 +60,6 @@ class ActivityChatBot : AppCompatActivity() {
 
         rvChat.adapter = mensagemChatBotAdapter
 
-        mensagemChatBotAdapter.addMessage(MensagemChatBot("Olá! Sou o assistente virtual da Bibliotech. Posso te ajudar com empréstimos, reservas e dúvidas gerais. Digite \"ajuda\" para ver os comandos.", false))
-
         btnVoltar.setOnClickListener {
             finish()
         }
@@ -54,35 +69,34 @@ class ActivityChatBot : AppCompatActivity() {
         }
     }
 
+
     private fun sendMessage() {
         val text = etMessageInput.text.toString().trim()
         if (text.isNotEmpty()) {
             mensagemChatBotAdapter.addMessage(MensagemChatBot(text, true))
             rvChat.scrollToPosition(mensagemChatBotAdapter.itemCount -1)
-
             etMessageInput.text.clear()
 
-            handler.postDelayed({
-                val botResponse = getBotResponse(text)
-                mensagemChatBotAdapter.addMessage(MensagemChatBot(botResponse, false))
-                rvChat.scrollToPosition(mensagemChatBotAdapter.itemCount -1)
-            }, 800)
-        }
-    }
+            val typingMessage = MensagemChatBot("...", false)
+            mensagemChatBotAdapter.addMessage(typingMessage)
+            rvChat.scrollToPosition(mensagemChatBotAdapter.itemCount -1)
 
-    private fun getBotResponse(userInput: String): String {
-        val input = userInput.lowercase()
+            lifecycleScope.launch {
+                try {
+                    val response = generativeModel.generateContent(text)
 
-        return when {
-            input.contains("horario") -> "A biblioteca funciona segunda a sexta, das 8h às 21h. Sábados, das 9h às 14h."
-            input.contains("reserva") -> "Para reservar, busque o livro e clique em 'Reservar Livro' na tela de detalhes. Você será notificado quando estiver disponível."
-            input.contains("renovar") -> "Você pode renovar seu empréstimo pela tela 'Meus Empréstimos', se o livro não estiver reservado por outro aluno."
-            input.contains("cadastro") -> "Para criar uma conta, clique em 'Cadastre-se' na tela de login."
+                    mensagemChatBotAdapter.message.remove(typingMessage)
+                    mensagemChatBotAdapter.notifyItemRemoved(mensagemChatBotAdapter.message.size)
 
-            input == "ajuda" || input.contains("comandos") -> "Comandos: Horário | Reserva | Renovar | Cadastro"
-            input.contains("obrigado") || input.contains("valeu") -> "De nada! Estou aqui para ajudar."
-
-            else -> "Desculpe, não entendi. Por favor, reformule sua pergunta ou digite \"ajuda\" para ver as opções."
+                    val botResponse = response.text?: "Desculpe, não consegui gerar uma resposta."
+                    mensagemChatBotAdapter.addMessage(MensagemChatBot(botResponse, false))
+                    rvChat.scrollToPosition(mensagemChatBotAdapter.itemCount -1)
+                } catch (e: Exception) {
+                    mensagemChatBotAdapter.message.remove(typingMessage)
+                    mensagemChatBotAdapter.notifyItemRemoved(mensagemChatBotAdapter.message.size)
+                    mensagemChatBotAdapter.addMessage(MensagemChatBot("Erro de conexão: ${e.message}", false))
+                }
+            }
         }
     }
 

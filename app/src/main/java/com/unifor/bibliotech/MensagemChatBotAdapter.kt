@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
-class MensagemChatBotAdapter(private val message: MutableList<MensagemChatBot>): RecyclerView.Adapter<MensagemChatBotAdapter.MensagemChatBotViewHolder>() {
+class MensagemChatBotAdapter(var message: MutableList<MensagemChatBot>): RecyclerView.Adapter<MensagemChatBotAdapter.MensagemChatBotViewHolder>() {
     class MensagemChatBotViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clListMessage: ConstraintLayout = itemView.findViewById(R.id.list_message)
         val tvBotMessage: TextView = itemView.findViewById(R.id.tvBotMessage)
