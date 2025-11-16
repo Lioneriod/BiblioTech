@@ -8,5 +8,6 @@ data class Livro(
     val status: Boolean = false,
     val titulo: String = "",
     val autor: String = "",
-    val anoPub: String = ""
+    val anoPub: String = "",
+    val usuarioId: String = ""
 )

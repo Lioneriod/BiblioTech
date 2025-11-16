@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class EmprestimoAdapter(private val listaEmprestimo: List<Emprestimo>): RecyclerView.Adapter<EmprestimoAdapter.EmprestimoViewHolder>() {
     class EmprestimoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -30,8 +33,13 @@ class EmprestimoAdapter(private val listaEmprestimo: List<Emprestimo>): Recycler
 
         holder.tvEmprestimoTitulo.text = emprestimo.titulo
         holder.tvEmprestimoAutor.text = emprestimo.autor
-        holder.tvPrazoDevolucao.text = emprestimo.prazo
+        holder.tvPrazoDevolucao.text = "Prazo: ${formatarData(emprestimo.prazo)}"
     }
-
+    private fun formatarData(timestamp: Timestamp?): String {
+        if (timestamp == null) return "N/A"
+        val data = timestamp.toDate()
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return sdf.format(data)
+    }
     override fun getItemCount() = listaEmprestimo.size
 }

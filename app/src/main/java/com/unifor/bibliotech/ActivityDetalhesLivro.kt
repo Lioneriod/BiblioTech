@@ -79,6 +79,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
     }
 
     private fun realizarReserva() {
+        val dataAtual = Timestamp.now()
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, 10)
         val dataPrazo = Timestamp(calendar.time)
@@ -87,14 +88,32 @@ class ActivityDetalhesLivro : AppCompatActivity() {
             "prazo" to dataPrazo,
             "titulo" to titulo,
             "usuarioId" to usuarioId,
-            "livroId" to livroId 
+            "livroId" to livroId,
+            "dataEmprestimo" to dataAtual
         )
 
+        val atualizacaoLivro = mapOf(
+            "status" to false,
+            "usuarioId" to usuarioId
+        )
+
+        val novaNotificacao = mapOf(
+            "usuarioId" to usuarioId,
+            "titulo" to "Empréstimo realizado com sucesso!",
+            "corpo" to "Você pegou o livro \"$titulo\". O prazo de devolução é ${formatarData(dataPrazo)}.",
+            "timestamp" to dataAtual,
+            "lida" to false
+        )
         val batch = fb.batch()
+
         val emprestimoRef = fb.collection("emprestimos").document()
         batch.set(emprestimoRef, novoEmprestimo)
+
         val livroRef = fb.collection("livros").document(livroId)
-        batch.update(livroRef, "status", false)
+        batch.update(livroRef, atualizacaoLivro)
+
+        val notificacaoRef = fb.collection("notificacoes").document()
+        batch.set(notificacaoRef, novaNotificacao)
         batch.commit()
             .addOnSuccessListener {
                 Toast.makeText(this, "Livro reservado com sucesso!", Toast.LENGTH_LONG).show()
@@ -107,7 +126,16 @@ class ActivityDetalhesLivro : AppCompatActivity() {
                 btnReservar.text = "Reservar"
             }
     }
-
+    private fun formatarData(timestamp: Timestamp?): String {
+        if (timestamp == null) return "Data não definida"
+        try {
+            val data = timestamp.toDate()
+            val sdf = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+            return sdf.format(data)
+        } catch (e: Exception) {
+            return "Data inválida"
+        }
+    }
     override fun onPause() { super.onPause() }
     override fun onResume() { super.onResume() }
     override fun onStop() { super.onStop() }
