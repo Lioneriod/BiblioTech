@@ -20,6 +20,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <ImageView
+            android:id="@+id/ivAdminProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_person_24"
+            android:contentDescription="Acessar Perfil"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            app:tint="@color/text_primary_white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvSaudacaoAdmin"
+            app:layout_constraintBottom_toBottomOf="@id/tvSaudacaoAdmin"
+            tools:ignore="HardcodedDebugMode" />
+
         <TextView
             android:id="@+id/tvSaudacaoAdmin"
             android:layout_width="0dp"
@@ -30,7 +45,8 @@
             android:text="Painel Administrativo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toStartOf="@id/ivAdminProfile" />
 
         <TextView
             android:id="@+id/tvBoasVindas"
@@ -43,19 +59,6 @@
             app:layout_constraintStart_toStartOf="@id/tvSaudacaoAdmin"
             app:layout_constraintEnd_toEndOf="@id/tvSaudacaoAdmin"
             app:layout_constraintTop_toBottomOf="@id/tvSaudacaoAdmin" />
-
-        <TextView
-            android:id="@+id/tvLogoutAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Sair da Conta"
-            android:textColor="@color/button_cancel_red"
-            android:textSize="14sp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvBoasVindas" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

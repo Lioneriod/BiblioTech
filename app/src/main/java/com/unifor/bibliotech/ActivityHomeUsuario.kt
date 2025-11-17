@@ -13,7 +13,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ActivityHomeUsuario : AppCompatActivity() {
+
     private lateinit var usuarioId: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -47,6 +49,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         perfil.setOnClickListener {
             val intent = Intent(this, ActivityPerfil::class.java)
+            intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
 
@@ -63,6 +66,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         fabChatBot.setOnClickListener {
             val intent = Intent(this, ActivityChatBot::class.java)
+            intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
 

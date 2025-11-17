@@ -2,6 +2,7 @@ package com.unifor.bibliotech
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,9 @@ import androidx.core.view.WindowInsetsCompat
 import kotlin.jvm.java
 
 class ActivityHomeAdmin : AppCompatActivity() {
+
+    private lateinit var adminID: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,16 +25,18 @@ class ActivityHomeAdmin : AppCompatActivity() {
             insets
         }
 
-        val logout: TextView = findViewById(R.id.tvLogoutAdmin)
         val gerenciarUsuarios: ConstraintLayout = findViewById(R.id.cardUsuarios)
         val relatorio: ConstraintLayout = findViewById(R.id.cardRelatorio)
         val reservas: ConstraintLayout = findViewById(R.id.cardAdminReservas)
+        val perfil: ImageView = findViewById(R.id.ivFotoPerfil)
+        val nomeDoAdmin = intent.getStringExtra("NOME_ADMIN")
+        adminID = intent.getStringExtra("ADMIN_ID") ?: ""
+        val tvSaudacao: TextView = findViewById(R.id.tvSaudacao)
 
-        logout.setOnClickListener {
-            val intent = Intent(this, ActivityLogin::class.java)
-
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+        if (nomeDoAdmin != null && nomeDoAdmin.isNotEmpty()) {
+            tvSaudacao.text = "Olá, $nomeDoAdmin!"
+        } else {
+            tvSaudacao.text = "Olá!"
         }
 
         gerenciarUsuarios.setOnClickListener {
@@ -45,6 +51,13 @@ class ActivityHomeAdmin : AppCompatActivity() {
 
         reservas.setOnClickListener {
             val intent = Intent(this, ActivityGerenciarReservasLivro::class.java)
+            startActivity(intent)
+        }
+
+        perfil.setOnClickListener {
+            val intent = Intent(this, ActivityPerfilAdmin::class.java)
+            intent.putExtra("NOME_ADMIN", nomeDoAdmin)
+            intent.putExtra("ADMIN_ID", adminID)
             startActivity(intent)
         }
     }

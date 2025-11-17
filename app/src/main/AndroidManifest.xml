@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BiblioTech">
         <activity
+            android:name=".ActivityEditarPerfilAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityPerfilAdmin"
+            android:exported="false" />
+        <activity
             android:name=".ActivityChatBot"
             android:exported="false" />
         <activity
