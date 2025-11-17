@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.unifor.bibliotech.adapters.LivroAdapter
-import com.unifor.bibliotech.datas.Livro
 
 class ActivityBuscaLivros : AppCompatActivity() {
     private lateinit var fb: FirebaseFirestore

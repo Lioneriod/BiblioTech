@@ -1,7 +1,15 @@
-package com.unifor.bibliotech.datas
+package com.unifor.bibliotech
+
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentId
 
 data class Emprestimo(
-    val titulo: String,
-    val autor: String,
-    val prazo: String
+    @DocumentId
+    val id: String = "",
+    val livroId: String = "",
+    val usuarioId: String = "",
+    val titulo: String = "",
+    val autor: String = "",
+    val prazo: Timestamp? = null,
+    val dataEmprestimo: Timestamp? = null
 )

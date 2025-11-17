@@ -1,5 +1,4 @@
-package com.unifor.bibliotech.adapters
-
+package com.unifor.bibliotech
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +6,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.unifor.bibliotech.datas.Notificacao
-import com.unifor.bibliotech.R
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class NotificacaoAdapter(private val listaNotificacao: List<Notificacao>): RecyclerView.Adapter<NotificacaoAdapter.NotificacaoViewHolder>() {
     class NotificacaoViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -18,20 +19,37 @@ class NotificacaoAdapter(private val listaNotificacao: List<Notificacao>): Recyc
         val tvCorpoNotificacao: TextView = itemView.findViewById(R.id.tvCorpoNotificacao)
         val tvDataNotificacao: TextView = itemView.findViewById(R.id.tvDataNotificacao)
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificacaoViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_item_notificacao, parent, false)
         return NotificacaoViewHolder(view)
     }
-
     override fun onBindViewHolder(holder: NotificacaoViewHolder, position: Int) {
         val notificacao = listaNotificacao[position]
         val context = holder.itemView.context
 
         holder.tvTituloNotificacao.text = notificacao.titulo
         holder.tvCorpoNotificacao.text = notificacao.corpo
-        holder.tvDataNotificacao.text = notificacao.data
+        holder.tvDataNotificacao.text = formatarDataNotificacao(notificacao.timestamp)
+    }
+
+    private fun formatarDataNotificacao(timestamp: Timestamp?): String {
+        if (timestamp == null) return ""
+        val dataNotificacao = timestamp.toDate()
+        val agora = java.util.Date()
+
+        val diff = agora.time - dataNotificacao.time
+        val diffMinutos = TimeUnit.MILLISECONDS.toMinutes(diff)
+
+        return when {
+            diffMinutos < 1 -> "agora"
+            diffMinutos < 60 -> "$diffMinutos mins atrás"
+            diffMinutos < 1440 -> "${TimeUnit.MINUTES.toHours(diffMinutos)}h atrás"
+            else -> {
+                val sdf = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+                sdf.format(dataNotificacao)
+            }
+        }
     }
 
     override fun getItemCount() = listaNotificacao.size
