@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.launch
 import com.google.ai.client.generativeai.type.*
+import com.unifor.bibliotech.adapters.MensagemChatBotAdapter
+import com.unifor.bibliotech.datas.MensagemChatBot
 
 class ActivityChatBot : AppCompatActivity() {
     private lateinit var mensagemChatBotAdapter: MensagemChatBotAdapter
@@ -94,7 +96,12 @@ class ActivityChatBot : AppCompatActivity() {
                 } catch (e: Exception) {
                     mensagemChatBotAdapter.message.remove(typingMessage)
                     mensagemChatBotAdapter.notifyItemRemoved(mensagemChatBotAdapter.message.size)
-                    mensagemChatBotAdapter.addMessage(MensagemChatBot("Erro de conexão: ${e.message}", false))
+                    mensagemChatBotAdapter.addMessage(
+                        MensagemChatBot(
+                            "Erro de conexão: ${e.message}",
+                            false
+                        )
+                    )
                 }
             }
         }
