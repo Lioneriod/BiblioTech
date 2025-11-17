@@ -13,8 +13,6 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.Toast
-import com.unifor.bibliotech.adapters.NotificacaoAdapter
-import com.unifor.bibliotech.datas.Notificacao
 
 class ActivityNotificacoes : AppCompatActivity() {
     private lateinit var fb: FirebaseFirestore

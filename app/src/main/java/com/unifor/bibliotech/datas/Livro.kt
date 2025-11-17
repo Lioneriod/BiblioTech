@@ -7,5 +7,6 @@ data class Livro(
     val titulo: String = "",
     val autor: String = "",
     val anoPub: String = "",
-    val usuarioId: String = ""
+    val usuarioId: String = "",
+    val sinopse: String = ""
 )
