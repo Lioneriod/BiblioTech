@@ -8,63 +8,76 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import android.widget.Toast
 import com.unifor.bibliotech.adapters.NotificacaoAdapter
 import com.unifor.bibliotech.datas.Notificacao
 
 class ActivityNotificacoes : AppCompatActivity() {
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NotificacaoAdapter
+    private var listaNotificacoes: MutableList<Notificacao> = mutableListOf()
+    private lateinit var usuarioId: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_notificacoes)
+        fb = Firebase.firestore
+        usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telaNotificacoes)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
-
-        val dadosNotificacoes = listOf(
-            Notificacao(
-                titulo = "Livro \"Five Night's At Freddy's: Silver Eyes\" disponível!",
-                corpo = "Sua reserva foi atendida! Você tem até 40h para retirar o livro da biblioteca! Corre!",
-                data = "10 mins atrás"
-            ),
-            Notificacao(
-                titulo = "Seu livro \"Coraline\" está perto de expirar. Atenção à devolução!",
-                corpo = "Faltam 5 dias para o seu livro expirar. Você tem até esse dia para se dirigir á biblioteca para devolve-lo",
-                data = "1 dia atrás"
-            ),
-            Notificacao(
-                titulo = "Livro \"Harry Potter\" recém adicionado na biblioteca! Corre pra pegar!",
-                corpo = "Um novo livro acaba de ser adicionado na biblioteca. Garanta sua reserva ou empréstimo já!",
-                data = "10/05"
-            )
-        )
-
-        val recyclerView: RecyclerView = findViewById(R.id.rvNotificacoes)
-
+        recyclerView = findViewById(R.id.rvNotificacoes)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        recyclerView.adapter = NotificacaoAdapter(dadosNotificacoes)
+        adapter = NotificacaoAdapter(listaNotificacoes)
+        recyclerView.adapter = adapter
 
         voltar.setOnClickListener {
             finish()
         }
+
+        if (usuarioId.isNotEmpty()) {
+            carregarNotificacoes()
+        } else {
+            Toast.makeText(this, "Erro: Usuário não identificado.", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+    private fun carregarNotificacoes() {
+        fb.collection("notificacoes")
+            .whereEqualTo("usuarioId", usuarioId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                listaNotificacoes.clear()
+                listaNotificacoes.addAll(querySnapshot.toObjects(Notificacao::class.java))
+                adapter.notifyDataSetChanged()
+                if (listaNotificacoes.isEmpty()) {
+                    Toast.makeText(this, "Nenhuma notificação.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao carregar notificações: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     override fun onPause() {
         super.onPause()
     }
-
     override fun onResume() {
         super.onResume()
     }
-
     override fun onStop() {
         super.onStop()
     }
-
     override fun onRestart() {
         super.onRestart()
     }

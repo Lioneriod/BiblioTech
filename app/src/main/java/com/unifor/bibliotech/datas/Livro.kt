@@ -1,7 +1,5 @@
-package com.unifor.bibliotech.datas
-
+package com.unifor.bibliotech
 import com.google.firebase.firestore.DocumentId
-
 data class Livro(
     @DocumentId
     val id: String = "",
@@ -9,5 +7,5 @@ data class Livro(
     val titulo: String = "",
     val autor: String = "",
     val anoPub: String = "",
-    val sinopse: String = ""
+    val usuarioId: String = ""
 )

@@ -1,6 +1,6 @@
 package com.unifor.bibliotech
-
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -14,17 +14,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar
-
 class ActivityDetalhesLivro : AppCompatActivity() {
     private lateinit var fb: FirebaseFirestore
     private lateinit var livroId: String
-    private lateinit var usuarioId: String 
+    private lateinit var usuarioId: String
     private lateinit var titulo: String
     private lateinit var autor: String
     private lateinit var btnReservar: Button
     private lateinit var tvStatus: TextView
-    private lateinit var sinopse: String
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -39,22 +36,17 @@ class ActivityDetalhesLivro : AppCompatActivity() {
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
         titulo = intent.getStringExtra("TITULO_LIVRO") ?: "Título"
         autor = intent.getStringExtra("AUTOR_LIVRO") ?: "Autor"
-        sinopse = intent.getStringExtra("SINOPSE_LIVRO") ?: "Sinopse não disponível."
-
         val anoPub = intent.getStringExtra("ANO_PUB_LIVRO") ?: "Ano"
         val statusDisponivel = intent.getBooleanExtra("STATUS_LIVRO", false)
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
         val tvTitulo: TextView = findViewById(R.id.tvLivroTitulo)
         val tvDetalhes: TextView = findViewById(R.id.tvLivroDetalhes)
-
         tvStatus = findViewById(R.id.tvLivroStatus)
         btnReservar = findViewById(R.id.btnReservar)
-
         val tvSinopse: TextView = findViewById(R.id.tvSinopse)
-
         tvTitulo.text = titulo
         tvDetalhes.text = "$autor | Ano: $anoPub"
-        tvSinopse.text = "$sinopse"
+        tvSinopse.text = "teste"
         if (statusDisponivel) {
             tvStatus.text = "DISPONÍVEL"
             btnReservar.isEnabled = true
@@ -66,10 +58,10 @@ class ActivityDetalhesLivro : AppCompatActivity() {
         voltar.setOnClickListener {
             finish()
         }
-
         btnReservar.setOnClickListener {
             if (livroId.isEmpty() || usuarioId.isEmpty()) {
                 Toast.makeText(this, "Erro: ID do livro ou usuário não encontrado.", Toast.LENGTH_LONG).show()
+                Log.e("FIRERESERVA", "LivroID ($livroId) ou UsuarioID ($usuarioId) está vazio.")
                 return@setOnClickListener
             }
             btnReservar.isEnabled = false
@@ -79,6 +71,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
     }
 
     private fun realizarReserva() {
+        val dataAtual = Timestamp.now()
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, 10)
         val dataPrazo = Timestamp(calendar.time)
@@ -87,14 +80,32 @@ class ActivityDetalhesLivro : AppCompatActivity() {
             "prazo" to dataPrazo,
             "titulo" to titulo,
             "usuarioId" to usuarioId,
-            "livroId" to livroId 
+            "livroId" to livroId,
+            "dataEmprestimo" to dataAtual
         )
 
+        val atualizacaoLivro = mapOf(
+            "status" to false,
+            "usuarioId" to usuarioId
+        )
+
+        val novaNotificacao = mapOf(
+            "usuarioId" to usuarioId,
+            "titulo" to "Empréstimo realizado com sucesso!",
+            "corpo" to "Você pegou o livro \"$titulo\". O prazo de devolução é ${formatarData(dataPrazo)}.",
+            "timestamp" to dataAtual,
+            "lida" to false
+        )
         val batch = fb.batch()
+
         val emprestimoRef = fb.collection("emprestimos").document()
         batch.set(emprestimoRef, novoEmprestimo)
+
         val livroRef = fb.collection("livros").document(livroId)
-        batch.update(livroRef, "status", false)
+        batch.update(livroRef, atualizacaoLivro)
+
+        val notificacaoRef = fb.collection("notificacoes").document()
+        batch.set(notificacaoRef, novaNotificacao)
         batch.commit()
             .addOnSuccessListener {
                 Toast.makeText(this, "Livro reservado com sucesso!", Toast.LENGTH_LONG).show()
@@ -107,7 +118,16 @@ class ActivityDetalhesLivro : AppCompatActivity() {
                 btnReservar.text = "Reservar"
             }
     }
-
+    private fun formatarData(timestamp: Timestamp?): String {
+        if (timestamp == null) return "Data não definida"
+        try {
+            val data = timestamp.toDate()
+            val sdf = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+            return sdf.format(data)
+        } catch (e: Exception) {
+            return "Data inválida"
+        }
+    }
     override fun onPause() { super.onPause() }
     override fun onResume() { super.onResume() }
     override fun onStop() { super.onStop() }
