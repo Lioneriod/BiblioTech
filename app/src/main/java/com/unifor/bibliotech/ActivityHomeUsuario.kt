@@ -11,22 +11,26 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class ActivityHomeUsuario : AppCompatActivity() {
-
     private lateinit var usuarioId: String
+
+    lateinit var fb: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home_usuario)
+        fb = Firebase.firestore
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.telaHomeUsuario)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        val nomeUsuario = intent.getStringExtra("NOME_USUARIO")
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
         val notificacoes: ImageButton = findViewById(R.id.btnNotificacoes)
         val saudacao: TextView = findViewById(R.id.tvSaudacao)
@@ -34,12 +38,6 @@ class ActivityHomeUsuario : AppCompatActivity() {
         val pesquisar: ConstraintLayout = findViewById(R.id.buscarLivros)
         val emprestimos: ConstraintLayout = findViewById(R.id.cardEmprestimos)
         val fabChatBot: FloatingActionButton = findViewById(R.id.fabChatbot)
-
-        if (nomeUsuario != null && nomeUsuario.isNotEmpty()) {
-            saudacao.text = "Olá, $nomeUsuario!"
-        } else {
-            saudacao.text = "Olá!"
-        }
 
         notificacoes.setOnClickListener {
             val intent = Intent(this, ActivityNotificacoes::class.java)
@@ -74,6 +72,26 @@ class ActivityHomeUsuario : AppCompatActivity() {
 //            val intent = Intent(this, ActivityGerenciarReservasLivro::class.java)
 //            startActivity(intent)
 //        }
+
+        carregarDadosDoUsuario(saudacao)
+    }
+
+    private fun carregarDadosDoUsuario(nomeUsuario: TextView) {
+        fb.collection("usuario")
+            .whereEqualTo("id", usuarioId)
+            .addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshots != null && !snapshots.isEmpty) {
+                    val documento = snapshots.documents[0]
+
+                    val nome = documento.getString("nome") ?: "Aluno"
+
+                    nomeUsuario.text = "Olá, " + nome
+                }
+            }
     }
 
     override fun onPause() {

@@ -17,9 +17,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ActivityPerfil : AppCompatActivity() {
-
-    
-    private lateinit var fb: FirebaseFirestore
+    lateinit var fb: FirebaseFirestore
     private lateinit var usuarioId: String
     private lateinit var tvNomeAluno: TextView
     private lateinit var tvEmailAluno: TextView
@@ -66,7 +64,6 @@ class ActivityPerfil : AppCompatActivity() {
 
         editarDados.setOnClickListener {
             val intent = Intent(this, ActivityEditarPerfil::class.java)
-            
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
@@ -78,20 +75,24 @@ class ActivityPerfil : AppCompatActivity() {
     private fun carregarDadosDoPerfil() {
         if (usuarioId.isEmpty()) return 
 
-        fb.collection("usuario").document(usuarioId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    
-                    tvNomeAluno.text = document.getString("nome")
-                    tvEmailAluno.text = document.getString("email")
+        fb.collection("usuario")
+            .whereEqualTo("id", usuarioId)
+            .addSnapshotListener{ snapshots, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+
+                if (snapshots != null && !snapshots.isEmpty) {
+                    val documento = snapshots.documents[0]
+
+                    val nome = documento.getString("Nome") ?: "Aluno"
+                    val email = documento.getString("email") ?: "aluno@gmail.com"
+
+                    tvNomeAluno.text = nome
+                    tvEmailAluno.text = email
                 } else {
                     Log.d("PERFIL", "Nenhum documento encontrado.")
                 }
-            }
-            .addOnFailureListener { e ->
-                Log.w("PERFIL", "Erro ao buscar documento", e)
-                Toast.makeText(this, "Falha ao carregar dados.", Toast.LENGTH_SHORT).show()
             }
     }
 

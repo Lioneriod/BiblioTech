@@ -73,7 +73,6 @@ class ActivityLogin : AppCompatActivity() {
                                 val nomeDoAdmin = document.getString("nome")
                                 val idDoAdmin = document.id
                                 val intent = Intent(this, ActivityHomeAdmin::class.java)
-                                intent.putExtra("NOME_ADMIN", nomeDoAdmin)
                                 intent.putExtra("ADMIN_ID", idDoAdmin)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
