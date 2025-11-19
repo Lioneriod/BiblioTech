@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BiblioTech">
         <activity
+            android:name=".ActivityAcessibilidade"
+            android:exported="false" />
+        <activity
             android:name=".ActivityEditarPerfilAdmin"
             android:exported="false" />
         <activity

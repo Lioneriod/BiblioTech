@@ -33,6 +33,7 @@ class ActivityPerfil : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val btnacessibilidade: ImageButton = findViewById(R.id.btnAcessibilidade)
 
         
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
@@ -65,6 +66,11 @@ class ActivityPerfil : AppCompatActivity() {
         editarDados.setOnClickListener {
             val intent = Intent(this, ActivityEditarPerfil::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
+            startActivity(intent)
+        }
+
+        btnacessibilidade.setOnClickListener {
+            val intent = Intent(this, ActivityAcessibilidade::class.java)
             startActivity(intent)
         }
 

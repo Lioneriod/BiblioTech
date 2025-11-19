@@ -60,6 +60,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         emprestimos.setOnClickListener {
             val intent = Intent(this, ActivityMeusEmprestimos::class.java)
+            intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
         }
 
