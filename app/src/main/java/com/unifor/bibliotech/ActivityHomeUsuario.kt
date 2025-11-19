@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 
 class ActivityHomeUsuario : AppCompatActivity() {
     private lateinit var usuarioId: String
+    private lateinit var saudacao: TextView
 
     lateinit var fb: FirebaseFirestore
 
@@ -33,7 +34,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
         val notificacoes: ImageButton = findViewById(R.id.btnNotificacoes)
-        val saudacao: TextView = findViewById(R.id.tvSaudacao)
+        saudacao = findViewById(R.id.tvSaudacao)
         val perfil: ImageView = findViewById(R.id.ivFotoPerfil)
         val pesquisar: ConstraintLayout = findViewById(R.id.buscarLivros)
         val emprestimos: ConstraintLayout = findViewById(R.id.cardEmprestimos)
@@ -73,10 +74,10 @@ class ActivityHomeUsuario : AppCompatActivity() {
 //            startActivity(intent)
 //        }
 
-        carregarDadosDoUsuario(saudacao)
+        carregarDadosDoUsuario()
     }
 
-    private fun carregarDadosDoUsuario(nomeUsuario: TextView) {
+    private fun carregarDadosDoUsuario() {
         fb.collection("usuario")
             .whereEqualTo("id", usuarioId)
             .addSnapshotListener { snapshots, e ->
@@ -89,7 +90,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
                     val nome = documento.getString("nome") ?: "Aluno"
 
-                    nomeUsuario.text = "Olá, " + nome
+                    saudacao.text = "Olá, " + nome
                 }
             }
     }
