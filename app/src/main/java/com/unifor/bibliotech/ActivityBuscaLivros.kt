@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -39,6 +40,7 @@ class ActivityBuscaLivros : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+        val btnSurpreendaMe: ImageButton = findViewById(R.id.btnSurpreendaMe)
         recyclerView = findViewById(R.id.rvResultadosBusca)
         etBusca = findViewById(R.id.etBusca)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -53,6 +55,10 @@ class ActivityBuscaLivros : AppCompatActivity() {
             intent.putExtra("ANO_PUB_LIVRO", livroClicado.anoPub)
             intent.putExtra("STATUS_LIVRO", livroClicado.status)
             startActivity(intent)
+        }
+
+        btnSurpreendaMe.setOnClickListener {
+            buscarLivroAleatorio()
         }
 
         livroAdapter = LivroAdapter(listaCompletaDeLivros, onItemClick)
@@ -71,6 +77,46 @@ class ActivityBuscaLivros : AppCompatActivity() {
             finish()
         }
         carregarLivrosDoFirebase()
+    }
+
+    private fun buscarLivroAleatorio() {
+        val collectionRef = fb.collection("livros")
+
+        val randomId = collectionRef.document().id
+
+        collectionRef
+            .whereGreaterThanOrEqualTo(FieldPath.documentId(), randomId)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    val livro = documents.documents[0]
+                    abrirDetalhesLivro(livro.id)
+                } else {
+                    collectionRef
+                        .whereLessThan(FieldPath.documentId(), randomId)
+                        .limit(1)
+                        .get()
+                        .addOnSuccessListener { docsWrap ->
+                            if (!docsWrap.isEmpty) {
+                                val livro = docsWrap.documents[0]
+                                abrirDetalhesLivro(livro.id)
+                            } else {
+                                Toast.makeText(this, "Nenhum livro encontrado", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao sortear: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun abrirDetalhesLivro(livroId: String) {
+        val intent = Intent(this, ActivityDetalhesLivro::class.java)
+        intent.putExtra("LIVRO_ID", livroId)
+        startActivity(intent)
+        Toast.makeText(this, "Livro Sorteado ID: $livroId", Toast.LENGTH_LONG).show()
     }
 
     private fun carregarLivrosDoFirebase() {

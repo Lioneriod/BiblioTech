@@ -87,4 +87,21 @@
         app:layout_constraintTop_toBottomOf="@id/clCampoBusca"
         tools:listitem="@layout/list_item_livro" />
 
+    <ImageButton
+        android:id="@+id/btnSurpreendaMe"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/bg_primary_button"
+        android:backgroundTint="@color/button_accent_blue"
+        android:contentDescription="Surpreenda-me: Escolher livro aleatório"
+        android:elevation="6dp"
+        android:padding="12dp"
+        android:src="@drawable/baseline_person_24"
+        android:tooltipText="Surpreenda-me!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/text_primary_white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
