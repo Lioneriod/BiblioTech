@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/telaRedefinirSenha"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_dark"
+    tools:context=".ActivityRedefinirSenha">
+
+    <TextView
+        android:id="@+id/tvTituloRedefinir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="28dp"
+        android:text="Redefinir Senha"
+        android:textColor="@color/text_primary_white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDescricaoRedefinir"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:text="Insira o PIN recebido e sua nova senha."
+        android:textColor="@color/text_secondary_gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRedefinir"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloRedefinir" />
+
+    <EditText
+        android:id="@+id/etPin"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_input_field"
+        android:hint="PIN (4 dígitos)"
+        android:inputType="number"
+        android:maxLength="4"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textColor="@color/text_primary_white"
+        android:textColorHint="@color/text_secondary_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRedefinir"
+        app:layout_constraintTop_toBottomOf="@id/tvDescricaoRedefinir" />
+
+    <EditText
+        android:id="@+id/etNovaSenha"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_input_field"
+        android:hint="Nova Senha"
+        android:inputType="textPassword"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textColor="@color/text_primary_white"
+        android:textColorHint="@color/text_secondary_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRedefinir"
+        app:layout_constraintTop_toBottomOf="@id/etPin" />
+
+    <EditText
+        android:id="@+id/etConfirmarSenha"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_input_field"
+        android:hint="Confirmar Nova Senha"
+        android:inputType="textPassword"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:textColor="@color/text_primary_white"
+        android:textColorHint="@color/text_secondary_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRedefinir"
+        app:layout_constraintTop_toBottomOf="@id/etNovaSenha" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRedefinirSenha"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_primary_button"
+        android:text="Redefinir Senha"
+        android:textAllCaps="false"
+        android:textColor="@color/text_primary_white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRedefinir"
+        app:layout_constraintTop_toBottomOf="@id/etConfirmarSenha" />
+
+    <TextView
+        android:id="@+id/tvCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Cancelar"
+        android:textColor="@color/button_accent_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

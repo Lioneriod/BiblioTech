@@ -1,17 +1,14 @@
 package com.unifor.bibliotech
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.View
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.Switch
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 

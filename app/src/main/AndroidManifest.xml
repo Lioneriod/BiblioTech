@@ -71,6 +71,9 @@
         <activity
             android:name=".ActivityEsqueceuSenha"
             android:exported="false" />
+        <activity
+            android:name=".ActivityRedefinirSenha"
+            android:exported="false" />
     </application>
 
 </manifest>
