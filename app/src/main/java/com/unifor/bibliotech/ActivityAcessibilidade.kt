@@ -53,13 +53,17 @@ class ActivityAcessibilidade : BaseActivity() {
 
     private fun setupTextSizeSeekBar() {
         val sbTextSize: SeekBar = findViewById(R.id.seekBarTextSize)
-        val savedScale = loadFloat(this,KEY_TEXT_SCALE, 1.0f)
-        sbTextSize.progress = ((savedScale - 0.8f) / 0.7f * 100).toInt()
+        val MIN_SCALE = 1.0f
+        val MAX_SCALE = 2.0f
+        val MAX_PROGRESS = 100
+        val SCALE_RANGE = MAX_SCALE - MIN_SCALE
+        val savedScale = loadFloat(context = this,KEY_TEXT_SCALE, defaultValue = MIN_SCALE)
+        sbTextSize.progress = (((savedScale - MIN_SCALE) / SCALE_RANGE) * MAX_PROGRESS).toInt()
 
         sbTextSize.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val newScale = 0.8f + (progress / 100.0f) * 0.7f
-                saveFloat(this@ActivityAcessibilidade, KEY_TEXT_SCALE, newScale)
+                val newScale = MIN_SCALE + (progress.toFloat() / MAX_PROGRESS.toFloat() * SCALE_RANGE)
+                saveFloat(context = this@ActivityAcessibilidade, KEY_TEXT_SCALE, newScale)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
