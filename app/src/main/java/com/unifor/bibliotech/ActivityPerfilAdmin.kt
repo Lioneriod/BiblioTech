@@ -61,7 +61,7 @@ class ActivityPerfilAdmin : AppCompatActivity() {
         if (adminID.isEmpty()) return
 
         fb.collection("usuario")
-            .whereEqualTo("usuarioId", adminID)
+            .whereEqualTo("id", adminID)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     return@addSnapshotListener

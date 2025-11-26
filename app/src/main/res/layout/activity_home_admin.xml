@@ -79,8 +79,6 @@
             android:paddingEnd="24dp"
             android:paddingBottom="24dp">
 
-            <include layout="@layout/card_admin_reservas" />
-
             <include layout="@layout/card_admin_usuarios" />
 
             <include layout="@layout/card_admin_relatorios" />

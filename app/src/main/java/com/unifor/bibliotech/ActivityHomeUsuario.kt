@@ -70,11 +70,6 @@ class ActivityHomeUsuario : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        reservas.setOnClickListener {
-//            val intent = Intent(this, ActivityGerenciarReservasLivro::class.java)
-//            startActivity(intent)
-//        }
-
         carregarDadosDoUsuario()
     }
 
@@ -91,7 +86,7 @@ class ActivityHomeUsuario : AppCompatActivity() {
 
                     val nome = documento.getString("nome") ?: "Aluno"
 
-                    saudacao.text = "Olá, " + nome
+                    saudacao.text = "Olá, " + nome + "!"
                 }
             }
     }

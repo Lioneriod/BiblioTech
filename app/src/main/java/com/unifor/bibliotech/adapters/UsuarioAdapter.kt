@@ -12,6 +12,7 @@ import com.unifor.bibliotech.R
 import com.unifor.bibliotech.datas.Usuario
 
 class UsuarioAdapter(private val listaUsuarios: List<Usuario>, private val onClickDetails: (Usuario) -> Unit, private val onClickRemove: (Usuario) -> Unit): RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
+    private var usuariosExibidos: MutableList<Usuario> = listaUsuarios.toMutableList()
     class UsuarioViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val clUsuario: ConstraintLayout = itemView.findViewById(R.id.clUsuario)
         val tvUsuarioNome: TextView = itemView.findViewById(R.id.tvUsuarioNome)
@@ -29,7 +30,7 @@ class UsuarioAdapter(private val listaUsuarios: List<Usuario>, private val onCli
     }
 
     override fun onBindViewHolder(holder: UsuarioViewHolder, position: Int) {
-        val usuario = listaUsuarios[position]
+        val usuario = usuariosExibidos[position]
         val context = holder.itemView.context
 
         holder.tvUsuarioNome.text = usuario.nome
@@ -44,5 +45,22 @@ class UsuarioAdapter(private val listaUsuarios: List<Usuario>, private val onCli
         }
     }
 
-    override fun getItemCount() = listaUsuarios.size
+    override fun getItemCount() = usuariosExibidos.size
+
+    fun filter(query: String) {
+        val termoBusca = query.lowercase().trim()
+
+        usuariosExibidos.clear()
+
+        if (termoBusca.isEmpty()) {
+            usuariosExibidos.addAll(listaUsuarios)
+        } else {
+            val resultado = listaUsuarios.filter { usuario ->
+                usuario.nome.lowercase().contains(termoBusca) ||
+                usuario.detalhes.contains(termoBusca)
+            }
+            usuariosExibidos.addAll(resultado)
+        }
+        notifyDataSetChanged()
+    }
 }

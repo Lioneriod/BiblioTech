@@ -16,12 +16,18 @@ import com.google.firebase.ktx.Firebase
 import java.util.Calendar
 class ActivityDetalhesLivro : AppCompatActivity() {
     private lateinit var fb: FirebaseFirestore
-    private lateinit var livroId: String
-    private lateinit var usuarioId: String
-    private lateinit var titulo: String
-    private lateinit var autor: String
+
+    private var livroId: String = ""
+    private var usuarioId: String = ""
+    private var tituloLivro: String = ""
+    private var autorLivro: String = ""
+
     private lateinit var btnReservar: Button
     private lateinit var tvStatus: TextView
+    private lateinit var tvTitulo: TextView
+    private lateinit var tvDetalhes: TextView
+    private lateinit var tvSinopse: TextView
+    private lateinit var btnVoltar: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,32 +38,23 @@ class ActivityDetalhesLivro : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        btnVoltar = findViewById(R.id.btnVoltar)
+        tvTitulo = findViewById(R.id.tvLivroTitulo)
+        tvDetalhes = findViewById(R.id.tvLivroDetalhes)
+        tvStatus = findViewById(R.id.tvLivroStatus)
+        tvSinopse = findViewById(R.id.tvSinopse)
+        btnReservar = findViewById(R.id.btnReservar)
+
+        btnReservar.isEnabled = false
+        btnReservar.text = "Carregando..."
+
         livroId = intent.getStringExtra("LIVRO_ID") ?: ""
         usuarioId = intent.getStringExtra("USUARIO_ID") ?: ""
-        titulo = intent.getStringExtra("TITULO_LIVRO") ?: "Título"
-        autor = intent.getStringExtra("AUTOR_LIVRO") ?: "Autor"
-        val anoPub = intent.getStringExtra("ANO_PUB_LIVRO") ?: "Ano"
-        val statusDisponivel = intent.getBooleanExtra("STATUS_LIVRO", false)
-        val voltar: ImageButton = findViewById(R.id.btnVoltar)
-        val tvTitulo: TextView = findViewById(R.id.tvLivroTitulo)
-        val tvDetalhes: TextView = findViewById(R.id.tvLivroDetalhes)
-        tvStatus = findViewById(R.id.tvLivroStatus)
-        btnReservar = findViewById(R.id.btnReservar)
-        val tvSinopse: TextView = findViewById(R.id.tvSinopse)
-        tvTitulo.text = titulo
-        tvDetalhes.text = "$autor | Ano: $anoPub"
-        tvSinopse.text = "teste"
-        if (statusDisponivel) {
-            tvStatus.text = "DISPONÍVEL"
-            btnReservar.isEnabled = true
-        } else {
-            tvStatus.text = "Indisponível"
-            btnReservar.isEnabled = false
-            btnReservar.text = "Indisponível para Emprestimo"
-        }
-        voltar.setOnClickListener {
+
+        btnVoltar.setOnClickListener {
             finish()
         }
+
         btnReservar.setOnClickListener {
             if (livroId.isEmpty() || usuarioId.isEmpty()) {
                 Toast.makeText(this, "Erro: ID do livro ou usuário não encontrado.", Toast.LENGTH_LONG).show()
@@ -68,6 +65,55 @@ class ActivityDetalhesLivro : AppCompatActivity() {
             btnReservar.text = "Reservando..."
             realizarReserva()
         }
+
+        if (livroId != null) {
+            carregarDadosDoLivro(livroId)
+        } else {
+            Toast.makeText(this, "Erro: nenhum livro selecionado.", Toast.LENGTH_SHORT).show()
+            finish()
+        }
+    }
+
+    private fun carregarDadosDoLivro(id: String) {
+        fb.collection("livros").document(id)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    tituloLivro = document.getString("titulo") ?: "Título"
+                    autorLivro = document.getString("autor") ?: "Autor"
+                    val sinopse = document.getString("sinopse") ?: "Sinopse"
+                    val anoPub = document.getString("anoPub") ?: "--"
+                    val status = document.get("status")
+                    val idDisponivel = when (status) {
+                        is Boolean -> status
+                        is String -> status.lowercase() == "Disponível"
+                        else -> false
+                    }
+
+                    tvTitulo.text = tituloLivro
+                    tvSinopse.text = sinopse
+                    tvDetalhes.text = "$autorLivro | Ano: $anoPub"
+
+                    if (idDisponivel) {
+                        tvStatus.text = "Disponível"
+                        tvStatus.setBackgroundResource(R.drawable.bg_status_disponivel)
+                        btnReservar.isEnabled = true
+                        btnReservar.text = "Reservar Livro"
+                    } else {
+                        tvStatus.text = "Indisponível"
+                        tvStatus.setBackgroundResource(R.drawable.bg_status_indisponivel)
+                        btnReservar.isEnabled = false
+                        btnReservar.text = "Reserva Indisponível"
+                    }
+                } else {
+                    Toast.makeText(this, "Livro não encontrado", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Erro ao carregar: ${e.message}", Toast.LENGTH_SHORT).show()
+                btnReservar.text = "Erro de conexão"
+            }
     }
 
     private fun realizarReserva() {
@@ -75,24 +121,28 @@ class ActivityDetalhesLivro : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, 10)
         val dataPrazo = Timestamp(calendar.time)
-        val novoEmprestimo = mapOf(
-            "autor" to autor,
+
+        val novoEmprestimo = hashMapOf(
+            "livroId" to livroId,
+            "usuarioId" to usuarioId,
+            "autor" to autorLivro,
             "prazo" to dataPrazo,
-            "titulo" to titulo,
+            "titulo" to tituloLivro,
             "usuarioId" to usuarioId,
             "livroId" to livroId,
-            "dataEmprestimo" to dataAtual
+            "dataEmprestimo" to dataAtual,
+            "statusDevolucao" to "pendente"
         )
 
-        val atualizacaoLivro = mapOf(
+        val atualizacaoLivro = hashMapOf<String, Any>(
             "status" to false,
-            "usuarioId" to usuarioId
+            "usuarioIdAtual" to usuarioId
         )
 
-        val novaNotificacao = mapOf(
+        val novaNotificacao = hashMapOf(
             "usuarioId" to usuarioId,
             "titulo" to "Empréstimo realizado com sucesso!",
-            "corpo" to "Você pegou o livro \"$titulo\". O prazo de devolução é ${formatarData(dataPrazo)}.",
+            "corpo" to "Você pegou o livro \"$tituloLivro\". O prazo de devolução é ${formatarData(dataPrazo)}.",
             "timestamp" to dataAtual,
             "lida" to false
         )

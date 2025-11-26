@@ -76,7 +76,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/bg_primary_button"
-        android:src="@drawable/outline_arrow_circle_right_24"
+        android:src="@drawable/baseline_send_24"
         app:tint="@color/text_primary_white"
         android:contentDescription="Enviar Mensagem"
         app:layout_constraintTop_toTopOf="parent"

@@ -16,8 +16,6 @@ class EmprestimoAdapter(private val listaEmprestimo: List<Emprestimo>): Recycler
         val tvEmprestimoTitulo: TextView = itemView.findViewById(R.id.tvEmprestimoTitulo)
         val tvEmprestimoAutor: TextView = itemView.findViewById(R.id.tvEmprestimoAutor)
         val tvPrazoDevolucao: TextView = itemView.findViewById(R.id.tvPrazoDevolucao)
-        val viewSeparator: View = itemView.findViewById(R.id.viewSeparator)
-        val btnRenovar: AppCompatButton = itemView.findViewById(R.id.btnRenovar)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmprestimoViewHolder {
         val view = LayoutInflater.from(parent.context)

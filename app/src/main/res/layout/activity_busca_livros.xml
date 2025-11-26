@@ -98,7 +98,7 @@
         android:contentDescription="Surpreenda-me: Escolher livro aleatório"
         android:elevation="6dp"
         android:padding="12dp"
-        android:src="@drawable/baseline_person_24"
+        android:src="@drawable/baseline_shuffle_24"
         android:tooltipText="Surpreenda-me!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

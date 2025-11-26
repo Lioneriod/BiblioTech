@@ -2,7 +2,10 @@ package com.unifor.bibliotech
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -19,6 +22,7 @@ import com.google.firebase.ktx.Firebase
 
 class ActivityListagemUsuarios : AppCompatActivity() {
     private lateinit var fb: FirebaseFirestore
+    private lateinit var etBuscaUsuarios: EditText
     private lateinit var recyclerView: RecyclerView
     private var listaDeUsuarios: MutableList<Usuario> = mutableListOf()
     private lateinit var adapter: UsuarioAdapter
@@ -36,9 +40,21 @@ class ActivityListagemUsuarios : AppCompatActivity() {
         }
 
         val voltar: ImageButton = findViewById(R.id.btnVoltar)
+        etBuscaUsuarios = findViewById(R.id.etBuscaUsuario)
+
         voltar.setOnClickListener {
             finish()
         }
+
+        etBuscaUsuarios.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.let {
+                    adapter.filter(it.toString())
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         setupRecyclerView()
 
@@ -82,6 +98,7 @@ class ActivityListagemUsuarios : AppCompatActivity() {
 
                     listaDeUsuarios.add(Usuario(id = id, nome = nome, detalhes = detalhes))
                 }
+                adapter.filter(etBuscaUsuarios.text.toString())
 
                 adapter.notifyDataSetChanged()
             }

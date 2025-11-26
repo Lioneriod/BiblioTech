@@ -136,17 +136,6 @@
                         app:trackTint="@color/text_secondary_gray"
                         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-                    <Switch
-                        android:id="@+id/switchGrayscale"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="48dp"
-                        android:text="Modo Tons de Cinza"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:thumbTint="@color/blue_accent"
-                        app:trackTint="@color/text_secondary_gray"
-                        tools:ignore="UseSwitchCompatOrMaterialXml" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

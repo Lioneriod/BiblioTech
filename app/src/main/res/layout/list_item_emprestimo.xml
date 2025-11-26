@@ -52,28 +52,4 @@
         android:backgroundTint="@color/status_reserved"
         tools:text="15/11" />
 
-    <View
-        android:id="@+id/viewSeparator"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/input_border_muted"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmprestimoAutor" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRenovar"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/bg_primary_button"
-        android:text="Renovar Empréstimo"
-        android:textAllCaps="false"
-        android:textColor="@color/text_primary_white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewSeparator" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,13 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_dark"
-    android:padding="24dp"
     tools:context=".ActivityEmissaoRelatorio">
 
     <ImageButton
         android:id="@+id/btnVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
         android:background="@android:color/transparent"
         android:contentDescription="Voltar para a tela anterior"
@@ -21,10 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
     <TextView
         android:id="@+id/tvTitulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
         android:text="Emissão de Relatórios"
         android:textColor="@color/text_primary_white"
@@ -37,6 +45,8 @@
         android:id="@+id/tvMensagem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
         android:text="Pressione o botão abaixo para gerar o Relatório Consolidado da Biblioteca, que inclui os livros mais emprestados e os usuários mais ativos no sistema."
         android:textColor="@color/text_secondary_gray"
@@ -49,6 +59,8 @@
         android:id="@+id/btnGerarRelatorio"
         android:layout_width="0dp"
         android:layout_height="56dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/bg_primary_button"
         android:text="Gerar Relatório Consolidado"
@@ -63,6 +75,8 @@
         android:id="@+id/tvResultadoRelatorio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginTop="32dp"
         android:textColor="@color/text_primary_white"
         android:textSize="16sp"

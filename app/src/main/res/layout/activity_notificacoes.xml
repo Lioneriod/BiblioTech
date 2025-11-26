@@ -34,18 +34,6 @@
         app:layout_constraintStart_toEndOf="@id/btnVoltar"
         app:layout_constraintTop_toTopOf="@id/btnVoltar" />
 
-    <TextView
-        android:id="@+id/tvMarcarComoLidas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:text="Marcar como lidas"
-        android:textColor="@color/button_accent_blue"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvTitulo"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitulo" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNotificacoes"
         android:layout_width="0dp"

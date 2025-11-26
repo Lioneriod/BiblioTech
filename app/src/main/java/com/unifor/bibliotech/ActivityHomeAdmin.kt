@@ -31,7 +31,6 @@ class ActivityHomeAdmin : AppCompatActivity() {
 
         val gerenciarUsuarios: ConstraintLayout = findViewById(R.id.cardUsuarios)
         val relatorio: ConstraintLayout = findViewById(R.id.cardRelatorio)
-        val reservas: ConstraintLayout = findViewById(R.id.cardAdminReservas)
         val perfil: ImageView = findViewById(R.id.ivAdminProfile)
         adminID = intent.getStringExtra("ADMIN_ID") ?: ""
         val tvSaudacao: TextView = findViewById(R.id.tvSaudacaoAdmin)
@@ -46,11 +45,6 @@ class ActivityHomeAdmin : AppCompatActivity() {
             startActivity(intent)
         }
 
-        reservas.setOnClickListener {
-            val intent = Intent(this, ActivityGerenciarReservasLivro::class.java)
-            startActivity(intent)
-        }
-
         perfil.setOnClickListener {
             val intent = Intent(this, ActivityPerfilAdmin::class.java)
             intent.putExtra("ADMIN_ID", adminID)
@@ -62,7 +56,7 @@ class ActivityHomeAdmin : AppCompatActivity() {
 
     private fun carregarDadosDoAdmin(nomeAdmin: TextView) {
         fb.collection("usuario")
-            .whereEqualTo("usuarioId", adminID)
+            .whereEqualTo("id", adminID)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     return@addSnapshotListener

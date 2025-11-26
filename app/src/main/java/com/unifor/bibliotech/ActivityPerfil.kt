@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class ActivityPerfil : AppCompatActivity() {
+class ActivityPerfil : BaseActivity() {
     lateinit var fb: FirebaseFirestore
     private lateinit var usuarioId: String
     private lateinit var tvNomeAluno: TextView
@@ -91,7 +91,7 @@ class ActivityPerfil : AppCompatActivity() {
                 if (snapshots != null && !snapshots.isEmpty) {
                     val documento = snapshots.documents[0]
 
-                    val nome = documento.getString("Nome") ?: "Aluno"
+                    val nome = documento.getString("nome") ?: "Aluno"
                     val email = documento.getString("email") ?: "aluno@gmail.com"
 
                     tvNomeAluno.text = nome

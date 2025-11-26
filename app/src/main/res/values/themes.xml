@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.BiblioTech" parent="Base.Theme.BiblioTech" />
+    <style name="Theme_App_HighContrast" parent="Theme.Material3.Dark" />
 </resources>

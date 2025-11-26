@@ -71,7 +71,7 @@ class ActivityEditarPerfilAdmin : AppCompatActivity() {
             btnSalvar.text = "Salvando..."
 
             fb.collection("usuario")
-                .whereEqualTo("usuarioId", adminID)
+                .whereEqualTo("id", adminID)
                 .get()
                 .addOnSuccessListener { querySnapshot ->
                     if (!querySnapshot.isEmpty) {

@@ -72,11 +72,25 @@
         app:layout_constraintStart_toStartOf="@id/etEmail"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
+    <Switch
+        android:id="@+id/switchAdmin"
+        android:layout_width="345dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:paddingVertical="8dp"
+        android:text="Cadastrar como Administrador"
+        android:textColor="@color/text_primary_white"
+        android:textSize="16sp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:layout_constraintEnd_toEndOf="@id/etSenha"
+        app:layout_constraintStart_toStartOf="@id/etSenha"
+        app:layout_constraintTop_toBottomOf="@id/etSenha" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnCadastrar"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="68dp"
         android:background="@drawable/bg_primary_button"
         android:text="Cadastrar"
         android:textAllCaps="false"

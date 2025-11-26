@@ -12,12 +12,13 @@
         android:id="@+id/tvTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="100dp"
         android:text="Esqueceu Senha"
         android:textColor="@color/text_primary_white"
         android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.212"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
