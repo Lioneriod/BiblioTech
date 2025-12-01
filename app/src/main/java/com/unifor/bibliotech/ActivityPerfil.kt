@@ -57,21 +57,25 @@ class ActivityPerfil : BaseActivity() {
             val intent = Intent(this, ActivityLogin::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         voltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         editarDados.setOnClickListener {
             val intent = Intent(this, ActivityEditarPerfil::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         btnacessibilidade.setOnClickListener {
             val intent = Intent(this, ActivityAcessibilidade::class.java)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         
