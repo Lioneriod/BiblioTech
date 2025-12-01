@@ -16,7 +16,7 @@ import com.google.ai.client.generativeai.type.*
 import com.unifor.bibliotech.adapters.MensagemChatBotAdapter
 import com.unifor.bibliotech.datas.MensagemChatBot
 
-class ActivityChatBot : AppCompatActivity() {
+class ActivityChatBot : BaseActivity() {
     private lateinit var mensagemChatBotAdapter: MensagemChatBotAdapter
     private lateinit var rvChat: RecyclerView
     private lateinit var etMessageInput: EditText
@@ -66,10 +66,12 @@ class ActivityChatBot : AppCompatActivity() {
 
         btnVoltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         btnSendMessage.setOnClickListener {
             sendMessage()
+            triggerHapticFeedback(this)
         }
     }
 

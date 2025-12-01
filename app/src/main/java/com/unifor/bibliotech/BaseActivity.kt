@@ -2,8 +2,12 @@ package com.unifor.bibliotech
 
 import android.content.Context
 import android.content.ContextWrapper
+import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
 import androidx.appcompat.app.AppCompatActivity
 
 const val KEY_TEXT_SCALE = "pref_text_scale"
@@ -26,8 +30,11 @@ fun loadFloat(context: Context, key: String, defaultValue: Float = 1.0f): Float 
 }
 
 open class BaseActivity : AppCompatActivity() {
+    private var currentFontScale: Float = 1.0f
+
     override fun attachBaseContext(newBase: Context) {
         val savedScale = loadFloat(newBase, KEY_TEXT_SCALE, 1.0f)
+        currentFontScale = savedScale
         val configuration = newBase.resources.configuration
         configuration.fontScale = savedScale
         val context = ContextWrapper(newBase.createConfigurationContext(configuration))
@@ -44,5 +51,32 @@ open class BaseActivity : AppCompatActivity() {
             setTheme(R.style.Theme_BiblioTech) // Substitua pelo seu tema padrão (ex: R.style.Theme_Bibliotech)
         }
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val savedScale = loadFloat(this, KEY_TEXT_SCALE, 1.0f)
+
+        if (savedScale != currentFontScale) {
+            recreate()
+        }
+    }
+    fun triggerHapticFeedback(context: Context) {
+        val hapticFeedbackEnabled = loadBoolean(this,KEY_HAPTIC)
+
+        if (hapticFeedbackEnabled) {
+            val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+            val pattern = longArrayOf(0, 50)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val effect = VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE)
+                vibrator.vibrate(effect)
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(pattern, -1)
+            }
+        }
     }
 }

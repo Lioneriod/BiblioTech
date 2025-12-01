@@ -6,5 +6,15 @@
     </style>
 
     <style name="Theme.BiblioTech" parent="Base.Theme.BiblioTech" />
-    <style name="Theme_App_HighContrast" parent="Theme.Material3.Dark" />
+    <style name="Theme.App.HighContrast" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorSurface">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="android:windowBackground">@color/black</item>
+
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
+
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryContainer">@color/black</item>
+    </style>
 </resources>

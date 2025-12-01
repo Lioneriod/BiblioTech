@@ -1,5 +1,8 @@
 package com.unifor.bibliotech
 
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -21,6 +24,14 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class ActivityHistoricoUsuario : AppCompatActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+
+        configuration.fontScale = 1.0f
+
+        val context = ContextWrapper(newBase.createConfigurationContext(configuration))
+        super.attachBaseContext(context)
+    }
 
     private lateinit var fb: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView

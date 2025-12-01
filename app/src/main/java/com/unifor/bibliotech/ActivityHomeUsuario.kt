@@ -15,7 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class ActivityHomeUsuario : AppCompatActivity() {
+class ActivityHomeUsuario : BaseActivity() {
     private lateinit var usuarioId: String
     private lateinit var saudacao: TextView
 
@@ -44,30 +44,35 @@ class ActivityHomeUsuario : AppCompatActivity() {
             val intent = Intent(this, ActivityNotificacoes::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         perfil.setOnClickListener {
             val intent = Intent(this, ActivityPerfil::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         pesquisar.setOnClickListener {
             val intent = Intent(this, ActivityBuscaLivros::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         emprestimos.setOnClickListener {
             val intent = Intent(this, ActivityMeusEmprestimos::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         fabChatBot.setOnClickListener {
             val intent = Intent(this, ActivityChatBot::class.java)
             intent.putExtra("USUARIO_ID", usuarioId)
             startActivity(intent)
+            triggerHapticFeedback(this)
         }
 
         carregarDadosDoUsuario()

@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class ActivityEditarPerfil : AppCompatActivity() {
+class ActivityEditarPerfil : BaseActivity() {
     lateinit var fb: FirebaseFirestore
     private lateinit var usuarioId: String
     private lateinit var etNome: EditText
@@ -49,11 +49,13 @@ class ActivityEditarPerfil : AppCompatActivity() {
 
         voltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         
         btnSalvar.setOnClickListener {
             salvarDados()
+            triggerHapticFeedback(this)
         }
 
         

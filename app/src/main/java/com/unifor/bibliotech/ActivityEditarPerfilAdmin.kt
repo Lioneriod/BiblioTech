@@ -1,5 +1,8 @@
 package com.unifor.bibliotech
 
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -15,6 +18,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class ActivityEditarPerfilAdmin : AppCompatActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+
+        configuration.fontScale = 1.0f
+
+        val context = ContextWrapper(newBase.createConfigurationContext(configuration))
+        super.attachBaseContext(context)
+    }
     lateinit var fb: FirebaseFirestore
     private lateinit var adminID: String
     private lateinit var etNomeAdmin: EditText

@@ -1,6 +1,9 @@
 package com.unifor.bibliotech
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
@@ -15,6 +18,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ActivityPerfilAdmin : AppCompatActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+
+        configuration.fontScale = 1.0f
+
+        val context = ContextWrapper(newBase.createConfigurationContext(configuration))
+        super.attachBaseContext(context)
+    }
     lateinit var fb: FirebaseFirestore
     private lateinit var adminID: String
     private lateinit var tvNomeAdmin: TextView

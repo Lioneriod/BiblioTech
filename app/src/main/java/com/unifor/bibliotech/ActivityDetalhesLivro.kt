@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar
-class ActivityDetalhesLivro : AppCompatActivity() {
+class ActivityDetalhesLivro : BaseActivity() {
     private lateinit var fb: FirebaseFirestore
 
     private var livroId: String = ""
@@ -53,6 +53,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
 
         btnVoltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         btnReservar.setOnClickListener {
@@ -64,6 +65,7 @@ class ActivityDetalhesLivro : AppCompatActivity() {
             btnReservar.isEnabled = false
             btnReservar.text = "Reservando..."
             realizarReserva()
+            triggerHapticFeedback(this)
         }
 
         if (livroId != null) {

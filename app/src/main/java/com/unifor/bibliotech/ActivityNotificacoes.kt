@@ -15,7 +15,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import android.widget.Toast
 
-class ActivityNotificacoes : AppCompatActivity() {
+class ActivityNotificacoes : BaseActivity() {
     private lateinit var fb: FirebaseFirestore
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NotificacaoAdapter
@@ -41,6 +41,7 @@ class ActivityNotificacoes : AppCompatActivity() {
 
         voltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         if (usuarioId.isNotEmpty()) {

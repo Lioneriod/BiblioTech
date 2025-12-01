@@ -1,6 +1,9 @@
 package com.unifor.bibliotech
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -17,6 +20,15 @@ import com.google.firebase.ktx.Firebase
 
 class ActivityLogin : AppCompatActivity() {
     lateinit var fb: FirebaseFirestore;
+
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+
+        configuration.fontScale = 1.0f
+
+        val context = ContextWrapper(newBase.createConfigurationContext(configuration))
+        super.attachBaseContext(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

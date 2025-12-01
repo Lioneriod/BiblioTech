@@ -28,6 +28,7 @@ class ActivityAcessibilidade : BaseActivity() {
 
         btnvoltar.setOnClickListener {
             finish()
+            triggerHapticFeedback(this)
         }
 
         val reduceAnimationsEnabled = loadBoolean(this,KEY_REDUCE_ANIM)
@@ -55,14 +56,17 @@ class ActivityAcessibilidade : BaseActivity() {
         val sbTextSize: SeekBar = findViewById(R.id.seekBarTextSize)
         val MIN_SCALE = 1.0f
         val MAX_SCALE = 2.0f
-        val MAX_PROGRESS = 100
+        val MAX_PROGRESS_INT = 100
+        val MAX_PROGRESS = MAX_PROGRESS_INT.toFloat()
         val SCALE_RANGE = MAX_SCALE - MIN_SCALE
         val savedScale = loadFloat(context = this,KEY_TEXT_SCALE, defaultValue = MIN_SCALE)
-        sbTextSize.progress = (((savedScale - MIN_SCALE) / SCALE_RANGE) * MAX_PROGRESS).toInt()
+        val progressCalculado = ((savedScale - MIN_SCALE) / SCALE_RANGE) * MAX_PROGRESS
+        sbTextSize.progress = progressCalculado.toInt()
 
         sbTextSize.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val newScale = MIN_SCALE + (progress.toFloat() / MAX_PROGRESS.toFloat() * SCALE_RANGE)
+                val progressFloat = progress.toFloat()
+                val newScale = MIN_SCALE + (progressFloat / MAX_PROGRESS * SCALE_RANGE)
                 saveFloat(context = this@ActivityAcessibilidade, KEY_TEXT_SCALE, newScale)
             }
 
@@ -85,17 +89,9 @@ class ActivityAcessibilidade : BaseActivity() {
     }
 
     private fun setupAnimationSwitches() {
-        val sReduceAnimations: Switch = findViewById(R.id.switchReduceAnimations)
         val sVibration: Switch = findViewById(R.id.switchVibration)
 
-        sReduceAnimations.isChecked = loadBoolean(this,KEY_REDUCE_ANIM)
         sVibration.isChecked = loadBoolean(this,KEY_HAPTIC)
-
-        sReduceAnimations.setOnCheckedChangeListener { _, isChecked ->
-            saveBoolean(this,KEY_REDUCE_ANIM, isChecked)
-            // Nenhuma ação imediata na ActivityAcessibilidade, mas deve ser checado
-            // antes de executar animações em todo o app.
-        }
 
         // Listener para Feedback Tátil
         sVibration.setOnCheckedChangeListener { _, isChecked ->
@@ -104,24 +100,6 @@ class ActivityAcessibilidade : BaseActivity() {
             // Opcional: dê um feedback tátil instantâneo ao ligar/desligar o switch
             if (isChecked) {
                 triggerHapticFeedback(this)
-            }
-        }
-    }
-
-    fun triggerHapticFeedback(context: Context) {
-        val hapticFeedbackEnabled = loadBoolean(this,KEY_HAPTIC)
-
-        if (hapticFeedbackEnabled) {
-            val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-
-            val pattern = longArrayOf(0, 50)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val effect = VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE)
-                vibrator.vibrate(effect)
-            } else {
-                @Suppress("DEPRECATION")
-                vibrator.vibrate(pattern, -1)
             }
         }
     }

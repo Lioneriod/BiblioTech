@@ -1,6 +1,9 @@
 package com.unifor.bibliotech
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Switch
@@ -12,6 +15,14 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ActivityCadastro : AppCompatActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        val configuration = Configuration(newBase.resources.configuration)
+
+        configuration.fontScale = 1.0f
+
+        val context = ContextWrapper(newBase.createConfigurationContext(configuration))
+        super.attachBaseContext(context)
+    }
     lateinit var fb: FirebaseFirestore
     private lateinit var etNome: EditText
     private lateinit var etEmail: EditText

@@ -17,7 +17,7 @@
     import com.google.firebase.firestore.ktx.firestore
     import com.google.firebase.ktx.Firebase
 
-    class ActivityBuscaLivros : AppCompatActivity() {
+    class ActivityBuscaLivros : BaseActivity() {
         private lateinit var fb: FirebaseFirestore
         private lateinit var recyclerView: RecyclerView
         private lateinit var etBusca: EditText
@@ -53,11 +53,13 @@
                 intent.putExtra("SINOPSE_LIVRO", livroClicado.sinopse)
                 intent.putExtra("ANO_PUB_LIVRO", livroClicado.anoPub)
                 intent.putExtra("STATUS_LIVRO", livroClicado.status)
+                triggerHapticFeedback(this)
                 startActivity(intent)
             }
 
             btnSurpreendaMe.setOnClickListener {
                 buscarLivroAleatorio()
+                triggerHapticFeedback(this)
             }
 
             livroAdapter = LivroAdapter(listaCompletaDeLivros, onItemClick)
@@ -74,6 +76,7 @@
             })
             voltar.setOnClickListener {
                 finish()
+                triggerHapticFeedback(this)
             }
             carregarLivrosDoFirebase()
         }
